@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TSparking</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="helloUser">Hello </string>
+    <string name="userprofile">User Profile</string>
+    <string name="firstname">First Name: </string>
+    <string name="lastname">Last Name: </string>
+    <string name="email">Email: </string>
+    <string name="searchinguser">Searching User </string>
+    <string name="searchingslot">Searching Slot </string>
+    <string name="back">back</string>
+    <string name="emaillogin">Enter Email</string>
+    <string name="passwordlogin">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="firstnamelogin">Enter First Name</string>
+    <string name="lastnamelogin">Enter Last Name</string>
+    <string name="logout">Log Out</string>
+    <string name="enteremailofuser">Enter email to search</string>
+    <string name="search">search</string>
+    <string name="enteridslot">Enter ID slot to search</string>
+
+</resources>

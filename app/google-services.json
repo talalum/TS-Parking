@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092296052652",
+    "project_id": "tsparking-9c1db",
+    "storage_bucket": "tsparking-9c1db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092296052652:android:bc43b7e8c9d99320f73409",
+        "android_client_info": {
+          "package_name": "com.example.tsparking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092296052652-jb3ejoe1hi93e7jd2bbj3akmcotpa1a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVxXvff2N-u2HbIuqY7FtpulFPRZ88PdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092296052652-jb3ejoe1hi93e7jd2bbj3akmcotpa1a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

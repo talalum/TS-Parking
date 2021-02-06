@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TSparking</string>
+    <string name="helloUser">שלום </string>
+    <string name="userprofile">פרופיל משתמש</string>
+    <string name="firstname">שם פרטי: </string>
+    <string name="lastname">שם משפחה: </string>
+    <string name="email">דוא"ל: </string>
+    <string name="searchinguser">חיפוש משתמש</string>
+    <string name="searchingslot">חיפוש חניה</string>
+    <string name="back">חזור</string>
+    <string name="emaillogin">הכנס דוא"ל </string>
+    <string name="passwordlogin">הכנס סיסמא</string>
+    <string name="login">התחברות</string>
+    <string name="register">הרשמה</string>
+    <string name="firstnamelogin">הכנס שם פרטי</string>
+    <string name="lastnamelogin">הכנס שם משפחה</string>
+    <string name="logout">התנתקות</string>
+    <string name="enteremailofuser">הכנס דוא"ל לחיפוש: </string>
+    <string name="search">חיפוש</string>
+    <string name="enteridslot">הכנס מספר חנייה לחיפוש</string>
+
+
+
+
+
+
+</resources>
