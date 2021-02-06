@@ -71,7 +71,6 @@ public class Register_frag extends Fragment {
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.SignUpFunc();
-                mainActivity.LoadPageProf();
             }
         });
         return view;
