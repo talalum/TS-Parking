@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private static String firstName=null;
     private FirebaseAuth mAuth;
 
     @Override
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
     }
-
 
     public void SignUpFunc() {
         EditText emailText = findViewById(R.id.EmailRText);
@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                             DatabaseReference myRef = database.getReference("Users").child(uid);
 
                             User u = new User(email, first_name, last_name);
+                            firstName=first_name;
                             myRef.setValue(u);
+                            LoadPageProf();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -88,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
+        //   fragmentTransaction = fragmentManager.beginTransaction();
+        //  fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
     }
 
     public void SignInFunc(View view) {
@@ -99,31 +101,50 @@ public class MainActivity extends AppCompatActivity {
         EditText passwordText = findViewById(R.id.PasswordText);
         String password = passwordText.getText().toString();
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(MainActivity.this, "Login OK",
-                                        Toast.LENGTH_SHORT).show();
-                                FirebaseUser user = mAuth.getCurrentUser();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(MainActivity.this, "Login OK",
+                                    Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = user.getUid();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("Users").child(uid);
 
-                                String uid = user.getUid();
-                                LoadPageProf();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(MainActivity.this, "Login failed",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    User value = dataSnapshot.getValue(User.class);
+                                    firstName = value.getFirstName();
+                                    LoadPageProf();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                }
+                            });
+
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this, "Login failed",
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+                    }
+                });
+    }
 
     public void LoadPageProf() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        Profile_frag r1=new Profile_frag();
+        Profile_frag r1= Profile_frag.newInstance(firstName,null);
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+
     }
 
     public void LoadSearchingUser() {

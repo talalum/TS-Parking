@@ -9,6 +9,9 @@ public class User {
     private String FirstName;
     private String LastName;
 
+    public User() {
+
+    }
     public User(String email, String firstName, String lastName) {
         super();
         Email = email;
