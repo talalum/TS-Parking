@@ -4,10 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
@@ -18,6 +21,9 @@ import com.example.tsparking.classes.MainActivity;
  * create an instance of this fragment.
  */
 public class Login_frag extends Fragment {
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button buttonLogin;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,10 +82,37 @@ public class Login_frag extends Fragment {
         log_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.SignInFunc(view);
             }
         });
+
+        editTextEmail = view.findViewById(R.id.EmailText);
+        editTextPassword = view.findViewById(R.id.PasswordText);
+        buttonLogin = view.findViewById(R.id.LoginB);
+
+        editTextEmail.addTextChangedListener(loginTextWatcher);
+        editTextPassword.addTextChangedListener(loginTextWatcher);
         return view;
     }
+
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String usernameInput = editTextEmail.getText().toString().trim();
+            String passwordInput = editTextPassword.getText().toString().trim();
+
+            buttonLogin.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
