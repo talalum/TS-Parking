@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
+    private static String lastName=null;
+    private static String Email=null;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
                             User u = new User(email, first_name, last_name);
                             firstName=first_name;
+                            lastName=last_name;
+                            Email=email;
                             myRef.setValue(u);
                             LoadPageProf();
 
@@ -121,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                                     // whenever data at this location is updated.
                                     User value = dataSnapshot.getValue(User.class);
                                     firstName = value.getFirstName();
+                                    lastName = value.getLastName();
+                                    Email = value.getEmail();
+
                                     LoadPageProf();
                                 }
 
@@ -142,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void LoadPageProf() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        Profile_frag r1= Profile_frag.newInstance(firstName,null);
+        Profile_frag r1= Profile_frag.newInstance(firstName,lastName,Email);
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
 
     }
@@ -160,5 +168,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void LogOutFunc() {
+        firstName=null;
+        lastName=null;
+        Email=null;
+
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentCont, new Login_frag()).addToBackStack(null).commit();
+
+    }
 }
 
