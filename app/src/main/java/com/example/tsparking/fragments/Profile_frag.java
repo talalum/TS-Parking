@@ -22,21 +22,28 @@ public class Profile_frag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    TextView t1;
+    TextView firstNameHeT;
+    TextView firstNameT;
+    TextView lastNameT;
+    TextView emailT;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+
 
     // TODO: Rename and change types of parameters
     private static String firstName;
-    private String mParam2;
+    private static String lastName;
+    private static String Email;
 
     public Profile_frag() {
         // Required empty public constructor
     }
 
-    public Profile_frag(String firstName) {
-        // Required empty public constructor
+    public Profile_frag(String firstName, String lastName, String email) {
     }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -46,11 +53,12 @@ public class Profile_frag extends Fragment {
      * @return A new instance of fragment Profile_frag.
      */
     // TODO: Rename and change types and number of parameters
-    public static Profile_frag newInstance(String param1, String param2) {
-        Profile_frag fragment = new Profile_frag(firstName);
+    public static Profile_frag newInstance(String param1, String param2,String param3) {
+        Profile_frag fragment = new Profile_frag(firstName,lastName,Email);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,7 +68,9 @@ public class Profile_frag extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             firstName = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            lastName = getArguments().getString(ARG_PARAM2);
+            Email = getArguments().getString(ARG_PARAM3);
+
         }
     }
 
@@ -69,8 +79,14 @@ public class Profile_frag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile_frag, container, false);
-        t1=(TextView)view.findViewById(R.id.helloTP);
-        t1.setText(firstName);
+        firstNameHeT=(TextView)view.findViewById(R.id.helloTP);
+        firstNameHeT.setText(firstName);
+        firstNameT=(TextView)view.findViewById(R.id.FirstNameTPr);
+        firstNameT.setText(firstName);
+        lastNameT=(TextView)view.findViewById(R.id.LastNameTPr);
+        lastNameT.setText(lastName);
+        emailT=(TextView)view.findViewById(R.id.EmailTPr);
+        emailT.setText(Email);
         Button search_user_button = (Button) view.findViewById(R.id.SearchingUserB);
         search_user_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +102,14 @@ public class Profile_frag extends Fragment {
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.LoadSearchingSlot();
+            }
+        });
+        Button logout = (Button) view.findViewById(R.id.LogOutB);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.LogOutFunc();
             }
         });
         return view;
