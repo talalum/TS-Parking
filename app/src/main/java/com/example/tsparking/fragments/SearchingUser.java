@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.tsparking.R;
+import com.example.tsparking.classes.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +63,16 @@ public class SearchingUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_searching_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_searching_user, container, false);
+        Button BackB = (Button) view.findViewById(R.id.BackB);
+        BackB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.BackToProfile();
+            }
+        });
+        return view;
+
     }
 }

@@ -19,5 +19,10 @@
     <string name="enteremailofuser">Enter email to search</string>
     <string name="search">search</string>
     <string name="enteridslot">Enter ID slot to search</string>
+    <string name="Disable">Disable</string>
+    <string name="Indoor">Indoor</string>
+    <string name="free">Free</string>
+
+
 
 </resources>

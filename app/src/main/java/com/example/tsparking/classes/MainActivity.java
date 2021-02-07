@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +51,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
     }
 
+
+
     public void LoadPageReg() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
+        Register_frag r1=new Register_frag();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
     public void SignUpFunc() {
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Authentication successed.",
+                            Toast.makeText(MainActivity.this, "Register successed.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, "Register failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -105,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText passwordText = findViewById(R.id.PasswordText);
         String password = passwordText.getText().toString();
+
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -131,14 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
                                     LoadPageProf();
                                 }
-
                                 @Override
                                 public void onCancelled(DatabaseError error) {
                                     // Failed to read value
                                 }
                             });
-
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Login failed",
@@ -166,6 +171,19 @@ public class MainActivity extends AppCompatActivity {
         SearchingSlot r1=new SearchingSlot();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
+    public void BackToProfile() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Profile_frag r1=new Profile_frag();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+    }
+    public void BackToLogin() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Login_frag r1=new Login_frag();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+    }
+
+
 
 
     public void LogOutFunc() {
