@@ -88,10 +88,19 @@ public class Login_frag extends Fragment {
             }
         });
 
+
+        Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
+        registerParking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.GoToRegisterParking();
+            }
+        });
+
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
-
         editTextEmail.addTextChangedListener(loginTextWatcher);
         editTextPassword.addTextChangedListener(loginTextWatcher);
         return view;
@@ -112,7 +121,6 @@ public class Login_frag extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
 }

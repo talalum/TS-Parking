@@ -76,4 +76,14 @@
             android:textSize="35dp"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/RegisterParkingB"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/buttonb"
+        android:text="reg Parking" />
+
 </LinearLayout>

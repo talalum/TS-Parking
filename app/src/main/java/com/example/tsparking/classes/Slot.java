@@ -9,7 +9,7 @@ public class Slot extends Parking{
 
     public Slot(String idParking, double price, String area, String address, boolean paved, String idSlot,
                 boolean disable, boolean indoor) {
-        super(idParking, price, area, address, paved);
+        super(price, area, address, paved);
         IdSlot = idSlot;
         Disable = disable;
         Indoor = indoor;

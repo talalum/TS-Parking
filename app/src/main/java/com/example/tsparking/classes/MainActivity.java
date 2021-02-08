@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tsparking.R;
+import com.example.tsparking.fragments.AddParking;
 import com.example.tsparking.fragments.Login_frag;
 import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
@@ -37,18 +39,32 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
 
+
+
     private FirebaseAuth mAuth;
 
+    private SharedPreferences sharedPreferences;
+
+
+    EditText Tprice;
+    EditText Tarea;
+    EditText Taddress;
+    EditText Tpaved;
+    Button SaveB;
+    DatabaseReference ref;
+    Parking parking;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_main);
-        fragmentManager = getSupportFragmentManager();
-        Login_frag login_frag = new Login_frag();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+    protected void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            mAuth = FirebaseAuth.getInstance();
+            setContentView(R.layout.activity_main);
+            fragmentManager = getSupportFragmentManager();
+            Login_frag login_frag = new Login_frag();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+
+
     }
 
 
@@ -82,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
-
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference myRef = database.getReference("Users").child(uid);
 
@@ -98,12 +113,8 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Register failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
-
-        //   fragmentTransaction = fragmentManager.beginTransaction();
-        //  fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
     }
 
     public void SignInFunc(View view) {
@@ -120,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Login OK",
+                            Toast.makeText(MainActivity.this, "Login successed",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
@@ -136,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                                     firstName = value.getFirstName();
                                     lastName = value.getLastName();
                                     Email = value.getEmail();
-
                                     LoadPageProf();
                                 }
                                 @Override
@@ -144,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
                                     // Failed to read value
                                 }
                             });
-                        } else {
+                        }
+                        else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Login failed",
                                     Toast.LENGTH_SHORT).show();
@@ -183,9 +194,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
-
-
-
     public void LogOutFunc() {
         firstName=null;
         lastName=null;
@@ -195,5 +203,94 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentCont, new Login_frag()).addToBackStack(null).commit();
 
     }
+
+    public void SaveParking() {
+
+        Tprice = (EditText) findViewById(R.id.priceText);
+        Tarea = (EditText) findViewById(R.id.areaText);
+        Taddress = (EditText) findViewById(R.id.addressText);
+        Tpaved = (EditText) findViewById(R.id.pavedText);
+        SaveB = (Button) findViewById(R.id.SaveButton);
+        parking = new Parking();
+        ref = FirebaseDatabase.getInstance().getReference().child("Parking");
+        SaveB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double price = Double.parseDouble(Tprice.getText().toString());
+                String area = Tarea.getText().toString();
+                String address = Taddress.getText().toString();
+                String paved = Tpaved.getText().toString();
+
+                Boolean b = false;
+                if (paved.equals("1"))
+                    b = true;
+                else if (paved.equals("0"))
+                    b = false;
+
+                parking.setPrice(price);
+                parking.setArea(area);
+                parking.setAddress(address);
+                parking.setPaved(b);
+
+                ref.push().setValue(parking);
+                Toast.makeText(MainActivity.this, "data insert sucessfuly", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+   /* public void SignUpFuncParking() {
+        EditText priceText = findViewById(R.id.priceText);
+        double price = Double.parseDouble(priceText.getText().toString());
+
+        EditText areaText = findViewById(R.id.areaText);
+        String area = areaText.getText().toString();
+
+        EditText addressText = findViewById(R.id.addressText);
+        String address = addressText.getText().toString();
+
+        EditText pavedText = findViewById(R.id.pavedText);
+        String paved =pavedText.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(area, address)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(MainActivity.this, "Register PARKING successed.",
+                                    Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = user.getUid();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("Parkings").child(uid);
+                            Boolean b = false;
+
+                            if(paved.equals("1")) b=true;
+                            else if(paved.equals("0")) b=false;
+
+                            Parking P = new Parking(price, area, address, b);
+                            myRef.setValue(P);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this, "Register PARKING failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+        //   fragmentTransaction = fragmentManager.beginTransaction();
+        //  fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
+    }*/
+
+    public void GoToRegisterParking() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AddParking r1=new AddParking();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+    }
+
+
 }
 
