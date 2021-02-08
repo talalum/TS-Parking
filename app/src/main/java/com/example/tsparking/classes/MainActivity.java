@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,13 +33,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText editTextEmail;
+    private EditText editTextPassword;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
     private static String lastName=null;
     private static String Email=null;
-
     private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Login_frag login_frag = new Login_frag();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+
     }
 
 
@@ -127,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference myRef = database.getReference("Users").child(uid);
 
+
+                            SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.putString("email", email);
+                            editor.putString("password", password);
+                            editor.apply();
+
                             myRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -190,6 +202,11 @@ public class MainActivity extends AppCompatActivity {
         firstName=null;
         lastName=null;
         Email=null;
+        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("email", null);
+        editor.putString("password", null);
+        editor.apply();
 
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new Login_frag()).addToBackStack(null).commit();

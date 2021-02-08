@@ -1,5 +1,7 @@
 package com.example.tsparking.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -92,6 +94,11 @@ public class Login_frag extends Fragment {
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        editTextEmail.setText(sharedPreferences.getString("email",null));
+        editTextPassword.setText(sharedPreferences.getString("password",null));
+
         editTextEmail.addTextChangedListener(loginTextWatcher);
         editTextPassword.addTextChangedListener(loginTextWatcher);
         return view;
@@ -114,5 +121,9 @@ public class Login_frag extends Fragment {
         public void afterTextChanged(Editable s) {
 
         }
+
+
     };
+
+
 }
