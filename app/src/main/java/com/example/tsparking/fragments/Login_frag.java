@@ -98,6 +98,15 @@ public class Login_frag extends Fragment {
             }
         });
 
+        Button registerSlot = (Button) view.findViewById(R.id.RegisterSlotB);
+        registerSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.GoToRegisterSlot();
+            }
+        });
+
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);

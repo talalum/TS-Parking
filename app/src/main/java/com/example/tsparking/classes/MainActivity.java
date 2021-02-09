@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.tsparking.R;
 import com.example.tsparking.fragments.AddParking;
+import com.example.tsparking.fragments.AddSlot;
 import com.example.tsparking.fragments.Login_frag;
 import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
@@ -51,8 +52,16 @@ public class MainActivity extends AppCompatActivity {
     EditText Taddress;
     EditText Tpaved;
     Button SaveB;
-    DatabaseReference ref;
+    DatabaseReference refB;
     Parking parking;
+
+    EditText Tdisable;
+    EditText Tindoor;
+    EditText Tfree;
+    EditText TparkingNum;
+    Button SaveBS;
+    DatabaseReference refBS;
+    Slot slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
             Login_frag login_frag = new Login_frag();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
-
-
     }
 
 
@@ -210,9 +217,10 @@ public class MainActivity extends AppCompatActivity {
         Tarea = (EditText) findViewById(R.id.areaText);
         Taddress = (EditText) findViewById(R.id.addressText);
         Tpaved = (EditText) findViewById(R.id.pavedText);
-        SaveB = (Button) findViewById(R.id.SaveButton);
+        SaveB = (Button) findViewById(R.id.SaveParkingButton);
+
         parking = new Parking();
-        ref = FirebaseDatabase.getInstance().getReference().child("Parking");
+        refB = FirebaseDatabase.getInstance().getReference().child("Parking");
         SaveB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,66 +232,17 @@ public class MainActivity extends AppCompatActivity {
                 Boolean b = false;
                 if (paved.equals("1"))
                     b = true;
-                else if (paved.equals("0"))
-                    b = false;
 
                 parking.setPrice(price);
                 parking.setArea(area);
                 parking.setAddress(address);
                 parking.setPaved(b);
 
-                ref.push().setValue(parking);
-                Toast.makeText(MainActivity.this, "data insert sucessfuly", Toast.LENGTH_LONG).show();
+                refB.push().setValue(parking);
+                Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
             }
         });
     }
-
-
-   /* public void SignUpFuncParking() {
-        EditText priceText = findViewById(R.id.priceText);
-        double price = Double.parseDouble(priceText.getText().toString());
-
-        EditText areaText = findViewById(R.id.areaText);
-        String area = areaText.getText().toString();
-
-        EditText addressText = findViewById(R.id.addressText);
-        String address = addressText.getText().toString();
-
-        EditText pavedText = findViewById(R.id.pavedText);
-        String paved =pavedText.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(area, address)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Register PARKING successed.",
-                                    Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("Parkings").child(uid);
-                            Boolean b = false;
-
-                            if(paved.equals("1")) b=true;
-                            else if(paved.equals("0")) b=false;
-
-                            Parking P = new Parking(price, area, address, b);
-                            myRef.setValue(P);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Register PARKING failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-        //   fragmentTransaction = fragmentManager.beginTransaction();
-        //  fragmentTransaction.replace(R.id.fragmentCont, new Register_frag()).addToBackStack(null).commit();
-    }*/
 
     public void GoToRegisterParking() {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -291,6 +250,56 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
+
+    public void SaveSlot() {
+
+        Tdisable = (EditText) findViewById(R.id.DisableText);
+        Tindoor = (EditText) findViewById(R.id.IndoorText);
+        Tfree = (EditText) findViewById(R.id.FreeText);
+        TparkingNum = (EditText) findViewById(R.id.ParkingNumText);
+        SaveBS = (Button) findViewById(R.id.SaveSlotButton);
+
+
+        slot = new Slot();
+        refBS = FirebaseDatabase.getInstance().getReference().child("Slot");
+
+        SaveBS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String disable = Tdisable.getText().toString();
+                String indoor = Tindoor.getText().toString();
+                String free = Tfree.getText().toString();
+                String ParkingNum = TparkingNum.getText().toString();
+
+
+                Boolean a = false;
+                if (disable.equals("1"))
+                    a = true;
+
+                Boolean b = false;
+                if (indoor.equals("1"))
+                    b = true;
+
+                Boolean c = false;
+                if (free.equals("1"))
+                    c = true;
+
+                slot.setDisable(a);
+                slot.setIndoor(b);
+                slot.setFree(c);
+                slot.setParkingNum(Integer.parseInt(ParkingNum));
+
+                refBS.push().setValue(slot);
+                Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void GoToRegisterSlot() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AddSlot r1=new AddSlot();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+    }
 
 }
 
