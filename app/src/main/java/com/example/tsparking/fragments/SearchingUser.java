@@ -1,7 +1,6 @@
 package com.example.tsparking.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +76,6 @@ public class SearchingUser extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_searching_user, container, false);
 
-        TextView firtsname=(TextView)view.findViewById(R.id.editTextTextPersonName);
-        String firstnames=firtsname.getText().toString();
 
 
         Button BackB = (Button) view.findViewById(R.id.BackB);
@@ -90,14 +87,17 @@ public class SearchingUser extends Fragment {
             }
         });
 
+
+
         Button searching = (Button) view.findViewById(R.id.searchB);
         searching.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
+                TextView firtsname=(TextView)view.findViewById(R.id.editTextTextPersonName);
+                String firstnames=firtsname.getText().toString();
+                mainActivity.getMySingeltonM().clear();
 
-
-      //   Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName").equalTo(firstnames);
                 Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName");
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -105,22 +105,18 @@ public class SearchingUser extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                        // mainActivity.clearUserList();
                         for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                            if(adSnapshot.getValue(User.class).getFirstName().equals(firstnames))
                             mainActivity.getMySingeltonM().addUser(adSnapshot.getValue(User.class));
-                            Log.i(TAG, "vvv" + adSnapshot.getValue(User.class).getFirstName());
                         }
+                        mainActivity.searchingUserFunc();
 
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-
                 });
 
-
-               Log.i(TAG, "vvvbgbb" +mainActivity.getMySingeltonM().getList().get(0).getFirstName());
-
-                mainActivity.searchingUserFunc();
             }
         });
         return view;

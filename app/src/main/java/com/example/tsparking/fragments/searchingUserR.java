@@ -79,13 +79,6 @@ public class searchingUserR extends Fragment {
         recyclerViewUser.setHasFixedSize(true);
         recyclerViewUser.setLayoutManager(new LinearLayoutManager(view.getContext()));
         listUsers listUser=mainActivity.getMySingeltonM();
-
-//       User u=new User("d@gmail.com","sapir","ir");
-//       mainActivity.addUserList(u);
-//       Log.i(TAG, "vvv" + list.get(0));
-
-
-
         adapterUser=new UserAdapter(view.getContext(),listUser.getList());
         recyclerViewUser.setAdapter(adapterUser);
 

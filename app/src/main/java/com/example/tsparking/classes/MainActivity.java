@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
     private FirebaseAuth mAuth;
-    private static listUsers userList;
+    private static listUsers userList ;
 
     public static listUsers getMySingeltonM() { // create singelton
         return userList.getMySingelton();
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Login_frag login_frag = new Login_frag();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
-       // userList=new ArrayList<>();
+     //   userList= new listUsers();
 
     }
 
