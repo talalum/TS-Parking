@@ -72,6 +72,14 @@ public class AddParking extends Fragment {
                 mainActivity.SaveParking();
             }
         });
+        Button back = (Button) view.findViewById(R.id.BackB);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.LoadManagerPage();
+            }
+        });
         return view;
     }
 }

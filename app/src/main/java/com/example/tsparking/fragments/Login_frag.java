@@ -82,14 +82,13 @@ public class Login_frag extends Fragment {
         log_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.SignInFunc(view);
             }
         });
 
 
-        Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
+        /*Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
         registerParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +104,7 @@ public class Login_frag extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.GoToRegisterSlot();
             }
-        });
+        });*/
 
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);

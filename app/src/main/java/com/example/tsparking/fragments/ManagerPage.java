@@ -14,10 +14,10 @@ import com.example.tsparking.classes.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddSlot#newInstance} factory method to
+ * Use the {@link ManagerPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddSlot extends Fragment {
+public class ManagerPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +28,7 @@ public class AddSlot extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddSlot() {
+    public ManagerPage() {
         // Required empty public constructor
     }
 
@@ -38,11 +38,11 @@ public class AddSlot extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddSlot.
+     * @return A new instance of fragment ManagerPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddSlot newInstance(String param1, String param2) {
-        AddSlot fragment = new AddSlot();
+    public static ManagerPage newInstance(String param1, String param2) {
+        ManagerPage fragment = new ManagerPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,24 +63,35 @@ public class AddSlot extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_slot, container, false);
-        Button register_buttonS = (Button) view.findViewById(R.id.SaveSlotButton);
-        register_buttonS.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_manager_page, container, false);
+
+        Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
+        registerParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.SaveSlot();
+                mainActivity.GoToRegisterParking();
             }
         });
 
+        Button registerSlot = (Button) view.findViewById(R.id.RegisterSlotB);
+        registerSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.GoToRegisterSlot();
+            }
+        });
         Button back = (Button) view.findViewById(R.id.BackB);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.LoadManagerPage();
+                mainActivity.BackToLogin();
             }
         });
+
+
         return view;
     }
 }

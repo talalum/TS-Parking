@@ -5,19 +5,27 @@ import java.util.ArrayList;
 
 
 public class User {
+//    private int UserNum;
     private String Email;
     private String FirstName;
     private String LastName;
 
-    public User() {
+    //    private static int counter_of_users = 0;
 
+    public User() {
+//        UserNum = ++counter_of_users; // blank constructor
     }
     public User(String email, String firstName, String lastName) {
         super();
         Email = email;
         FirstName = firstName;
         LastName = lastName;
+        //        UserNum = ++counter_of_users; // blank constructor
+
     }
+//    public int getUserNum() {
+//        return UserNum;
+//    }
 
     public String getEmail() {
         return Email;

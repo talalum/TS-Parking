@@ -18,6 +18,7 @@ import com.example.tsparking.R;
 import com.example.tsparking.fragments.AddParking;
 import com.example.tsparking.fragments.AddSlot;
 import com.example.tsparking.fragments.Login_frag;
+import com.example.tsparking.fragments.ManagerPage;
 import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
@@ -40,18 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
 
-
-
     private FirebaseAuth mAuth;
-
-    private SharedPreferences sharedPreferences;
-
 
     EditText Tprice;
     EditText Tarea;
     EditText Taddress;
     EditText Tpaved;
-    Button SaveB;
     DatabaseReference refB;
     Parking parking;
 
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     EditText Tindoor;
     EditText Tfree;
     EditText TparkingNum;
-    Button SaveBS;
     DatabaseReference refBS;
     Slot slot;
 
@@ -73,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
     }
-
-
 
     public void LoadPageReg() {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -96,32 +88,32 @@ public class MainActivity extends AppCompatActivity {
         String last_name = lastNameText.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Register successed.",
-                                    Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("Users").child(uid);
+        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(MainActivity.this, "Register succeeded.",
+                            Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String uid = user.getUid();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("Users").child(uid);
 
-                            User u = new User(email, first_name, last_name);
-                            firstName=first_name;
-                            lastName=last_name;
-                            Email=email;
-                            myRef.setValue(u);
-                            LoadPageProf();
+                    User u = new User(email, first_name, last_name);
+                    firstName=first_name;
+                    lastName=last_name;
+                    Email=email;
+                    myRef.setValue(u);
+                    LoadPageProf();
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Register failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(MainActivity.this, "Register failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void SignInFunc(View view) {
@@ -130,52 +122,61 @@ public class MainActivity extends AppCompatActivity {
 
         EditText passwordText = findViewById(R.id.PasswordText);
         String password = passwordText.getText().toString();
+        if((email.equals("talalum@gmail.com") && password.equals("123456")) ||
+                (email.equals("sapirani@gmail.com") && password.equals("123456")) ||
+                (email.equals("effi.profus@gmail.com") && password.equals("123456")))
+            LoadManagerPage();
+        else {
+            mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(MainActivity.this, "Login succeeded",
+                                Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String uid = user.getUid();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("Users").child(uid);
 
+                        myRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // This method is called once with the initial value and again
+                                // whenever data at this location is updated.
+                                User value = dataSnapshot.getValue(User.class);
+                                firstName = value.getFirstName();
+                                lastName = value.getLastName();
+                                Email = value.getEmail();
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Login successed",
-                                    Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("Users").child(uid);
+                                LoadPageProf();
+                            }
 
-                            myRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    // This method is called once with the initial value and again
-                                    // whenever data at this location is updated.
-                                    User value = dataSnapshot.getValue(User.class);
-                                    firstName = value.getFirstName();
-                                    lastName = value.getLastName();
-                                    Email = value.getEmail();
-                                    LoadPageProf();
-                                }
-                                @Override
-                                public void onCancelled(DatabaseError error) {
-                                    // Failed to read value
-                                }
-                            });
-                        }
-                        else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Login failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value
+                            }
+                        });
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(MainActivity.this, "Login failed",
+                                Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
+        }
     }
 
     public void LoadPageProf() {
         fragmentTransaction = fragmentManager.beginTransaction();
         Profile_frag r1= Profile_frag.newInstance(firstName,lastName,Email);
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
-
+    }
+    public void LoadManagerPage() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        ManagerPage r1= new ManagerPage();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
     public void LoadSearchingUser() {
@@ -208,40 +209,34 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new Login_frag()).addToBackStack(null).commit();
-
     }
 
     public void SaveParking() {
-
         Tprice = (EditText) findViewById(R.id.priceText);
         Tarea = (EditText) findViewById(R.id.areaText);
         Taddress = (EditText) findViewById(R.id.addressText);
         Tpaved = (EditText) findViewById(R.id.pavedText);
-        SaveB = (Button) findViewById(R.id.SaveParkingButton);
 
         parking = new Parking();
         refB = FirebaseDatabase.getInstance().getReference().child("Parking");
-        SaveB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double price = Double.parseDouble(Tprice.getText().toString());
-                String area = Tarea.getText().toString();
-                String address = Taddress.getText().toString();
-                String paved = Tpaved.getText().toString();
 
-                Boolean b = false;
-                if (paved.equals("1"))
-                    b = true;
+        double price = Double.parseDouble(Tprice.getText().toString());
+        String area = Tarea.getText().toString();
+        String address = Taddress.getText().toString();
+        String paved = Tpaved.getText().toString();
 
-                parking.setPrice(price);
-                parking.setArea(area);
-                parking.setAddress(address);
-                parking.setPaved(b);
+        Boolean b = false;
+        if (paved.equals("1"))
+            b = true;
 
-                refB.push().setValue(parking);
-                Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
-            }
-        });
+        parking.setPrice(price);
+        parking.setArea(area);
+        parking.setAddress(address);
+        parking.setPaved(b);
+
+        refB.push().setValue(parking);
+        Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
+        GoToRegisterParking();
     }
 
     public void GoToRegisterParking() {
@@ -250,49 +245,42 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
-
     public void SaveSlot() {
 
         Tdisable = (EditText) findViewById(R.id.DisableText);
         Tindoor = (EditText) findViewById(R.id.IndoorText);
         Tfree = (EditText) findViewById(R.id.FreeText);
         TparkingNum = (EditText) findViewById(R.id.ParkingNumText);
-        SaveBS = (Button) findViewById(R.id.SaveSlotButton);
-
 
         slot = new Slot();
         refBS = FirebaseDatabase.getInstance().getReference().child("Slot");
 
-        SaveBS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String disable = Tdisable.getText().toString();
-                String indoor = Tindoor.getText().toString();
-                String free = Tfree.getText().toString();
-                String ParkingNum = TparkingNum.getText().toString();
+        String disable = Tdisable.getText().toString();
+        String indoor = Tindoor.getText().toString();
+        String free = Tfree.getText().toString();
+        String ParkingNum = TparkingNum.getText().toString();
 
 
-                Boolean a = false;
-                if (disable.equals("1"))
-                    a = true;
+        Boolean a = false;
+        if (disable.equals("1"))
+            a = true;
 
-                Boolean b = false;
-                if (indoor.equals("1"))
-                    b = true;
+        Boolean b = false;
+        if (indoor.equals("1"))
+            b = true;
 
-                Boolean c = false;
-                if (free.equals("1"))
-                    c = true;
+        Boolean c = false;
+        if (free.equals("1"))
+            c = true;
 
-                slot.setDisable(a);
-                slot.setIndoor(b);
-                slot.setFree(c);
-                slot.setParkingNum(Integer.parseInt(ParkingNum));
+        slot.setDisable(a);
+        slot.setIndoor(b);
+        slot.setFree(c);
+        slot.setParkingNum(Integer.parseInt(ParkingNum));
 
-                refBS.push().setValue(slot);
-                Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
-            }
-        });
+        refBS.push().setValue(slot);
+        Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
+        GoToRegisterSlot();
     }
 
     public void GoToRegisterSlot() {
@@ -300,6 +288,4 @@ public class MainActivity extends AppCompatActivity {
         AddSlot r1=new AddSlot();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
-
 }
-

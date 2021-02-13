@@ -22,8 +22,10 @@
     <string name="Disable">Disable</string>
     <string name="Indoor">Indoor</string>
     <string name="free">Free</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Managerpage">Manager page</string>
+    <string name="Addslot">Add Slot</string>
+    <string name="Addparking">Add Parking</string>
+
 
 
 </resources>

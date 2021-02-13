@@ -53,7 +53,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/RegisterButtonPARKING"
+            android:id="@+id/RegisterUserButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/button_style"

@@ -73,7 +73,7 @@ public class Register_frag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_frag, container, false);
 
-        Button register_button = (Button) view.findViewById(R.id.RegisterButtonPARKING);
+        Button register_button = (Button) view.findViewById(R.id.RegisterUserButton);
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +95,7 @@ public class Register_frag extends Fragment {
         editTextPassword = view.findViewById(R.id.PasswordRText);
         editTextFirstname = view.findViewById(R.id.FirstNameText);
         editTextLastname = view.findViewById(R.id.LastNameText);
-        buttonRegister = view.findViewById(R.id.RegisterButtonPARKING);
+        buttonRegister = view.findViewById(R.id.RegisterUserButton);
 
         editTextEmail.addTextChangedListener(loginTextWatcher);
         editTextPassword.addTextChangedListener(loginTextWatcher);
