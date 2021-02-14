@@ -23,6 +23,8 @@
             android:gravity="center"
             android:hint="@string/emaillogin"
             android:inputType="textEmailAddress"
+            android:text=" "
+
             android:textSize="30sp" />
     </LinearLayout>
 
