@@ -1,16 +1,23 @@
 package com.example.tsparking.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
+import com.example.tsparking.classes.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +25,10 @@ import com.example.tsparking.classes.MainActivity;
  * create an instance of this fragment.
  */
 public class SearchingUser extends Fragment {
+
+    private static final String TAG = "MyActivity";
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,12 +75,48 @@ public class SearchingUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_searching_user, container, false);
+
+
+
         Button BackB = (Button) view.findViewById(R.id.BackB);
         BackB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.BackToProfile();
+            }
+        });
+
+
+
+        Button searching = (Button) view.findViewById(R.id.searchB);
+        searching.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                TextView firtsname=(TextView)view.findViewById(R.id.editTextTextPersonName);
+                String firstnames=firtsname.getText().toString();
+                mainActivity.getMySingeltonM().clear();
+
+                Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName");
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       // mainActivity.clearUserList();
+                        for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                            if(adSnapshot.getValue(User.class).getFirstName().equals(firstnames))
+                            mainActivity.getMySingeltonM().addUser(adSnapshot.getValue(User.class));
+                        }
+                        mainActivity.searchingUserFunc();
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
         return view;

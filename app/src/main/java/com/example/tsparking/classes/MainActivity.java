@@ -1,19 +1,15 @@
 package com.example.tsparking.classes;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.tsparking.R;
 import com.example.tsparking.fragments.Login_frag;
@@ -21,6 +17,7 @@ import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
+import com.example.tsparking.fragments.searchingUserR;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,16 +30,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText editTextEmail;
-    private EditText editTextPassword;
+//    private EditText editTextEmail;
+//    private EditText editTextPassword;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
     private static String lastName=null;
     private static String Email=null;
     private FirebaseAuth mAuth;
+    private static listUsers userList ;
 
+    public static listUsers getMySingeltonM() { // create singelton
+        return userList.getMySingelton();
+    }
 
+//    public static void clearM() { // create singelton
+//        userList.clear();
+//    }
+//
+//
+//    public void addUserM(User new_user) { // add a new worker to the list
+//        userList.addUser(new_user);
+//    }
+//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         Login_frag login_frag = new Login_frag();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+     //   userList= new listUsers();
 
     }
-
 
 
     public void LoadPageReg() {
@@ -96,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
                             lastName=last_name;
                             Email=email;
                             myRef.setValue(u);
+
+                           // userList.add(u);
+
                             LoadPageProf();
 
                         } else {
@@ -148,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
                                     firstName = value.getFirstName();
                                     lastName = value.getLastName();
                                     Email = value.getEmail();
-
                                     LoadPageProf();
                                 }
                                 @Override
@@ -211,6 +223,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new Login_frag()).addToBackStack(null).commit();
 
+    }
+
+    public void searchingUserFunc() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentCont, new searchingUserR()).addToBackStack(null).commit();
     }
 }
 
