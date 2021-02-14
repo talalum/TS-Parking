@@ -84,15 +84,34 @@ public class Login_frag extends Fragment {
         log_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.SignInFunc(view);
             }
         });
 
+
+        /*Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
+        registerParking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.GoToRegisterParking();
+            }
+        });
+
+        Button registerSlot = (Button) view.findViewById(R.id.RegisterSlotB);
+        registerSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.GoToRegisterSlot();
+            }
+        });*/
+
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
+
 
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
@@ -119,7 +138,6 @@ public class Login_frag extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-
         }
 
 

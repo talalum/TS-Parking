@@ -2,50 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.Register_frag">
+    android:layout_height="match_parent"
+    tools:context=".fragments.AddParking">
+
 
     <EditText
-        android:id="@+id/EmailRText"
+        android:id="@+id/priceText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.35"
         android:gravity="center"
-        android:hint="@string/emaillogin"
-        android:inputType="textEmailAddress"
+        android:hint="price"
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/PasswordRText"
+        android:id="@+id/areaText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.35"
         android:gravity="center"
-        android:hint="@string/passwordlogin"
-        android:inputType="number|numberPassword"
+        android:hint="area"
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/FirstNameText"
+        android:id="@+id/addressText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.35"
         android:gravity="center"
-        android:hint="@string/firstnamelogin"
-        android:inputType="textPersonName"
+        android:hint="address"
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/LastNameText"
+        android:id="@+id/pavedText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.35"
         android:gravity="center"
-        android:hint="@string/lastnamelogin"
-        android:inputType="textPersonName"
-        android:textSize="30sp" />
-
+        android:hint="paved"
+        android:textSize="30sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,13 +49,12 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/RegisterUserButton"
+            android:id="@+id/SaveParkingButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/button_style"
-            android:text="@string/register"
-            android:textSize="35sp"
-            android:enabled="false"/>
+            android:text="Add Parking"
+            android:textSize="35sp"/>
     </LinearLayout>
 
     <LinearLayout

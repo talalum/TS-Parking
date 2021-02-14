@@ -1,25 +1,37 @@
 package com.example.tsparking.classes;
 
 
+import java.sql.Array;
+import java.util.List;
+
 public class Parking {
-    private String idParking;
+//    private int ParkingNum;
     private double price;
     private String area;
     private String address;
     private boolean paved;
 
-    public Parking(String idParking, double price, String area, String address, boolean paved) {
+//    private static int counter_of_parking = 0;
+
+    public Parking() {
+//        ParkingNum = ++counter_of_parking; // blank constructor
+    }
+
+    public Parking(double price, String area, String address, boolean paved) {
         super();
-        this.idParking = idParking;
         this.price = price;
         this.area = area;
         this.address = address;
         this.paved = paved;
+//        ParkingNum = ++counter_of_parking; // blank constructor
     }
 
-    public String getIdParking() {
-        return idParking;
-    }
+
+//    public int getParkingNum() {
+//        return ParkingNum;
+//    }
+//
+
 
     public double getPrice() {
         return price;
@@ -52,6 +64,4 @@ public class Parking {
     public void setPaved(boolean paved) {
         this.paved = paved;
     }
-
-
 }
