@@ -111,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
                     lastName=last_name;
                     Email=email;
                     myRef.setValue(u);
+
+
+                    SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.apply();
+
+
+
                     LoadPageProf();
 
                 } else {
@@ -146,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
                         String uid = user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
+
+
+                        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.apply();
+
 
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -300,7 +318,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new searchingUserR()).addToBackStack(null).commit();
     }
-}
 
     public void GoToRegisterSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();

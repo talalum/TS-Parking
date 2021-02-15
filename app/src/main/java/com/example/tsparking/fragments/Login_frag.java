@@ -3,9 +3,6 @@ package com.example.tsparking.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
@@ -108,10 +107,16 @@ public class Login_frag extends Fragment {
             }
         });*/
 
+
+
+
+
+
+
+
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
-
 
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
@@ -122,6 +127,7 @@ public class Login_frag extends Fragment {
         editTextPassword.addTextChangedListener(loginTextWatcher);
         return view;
     }
+
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
         @Override
