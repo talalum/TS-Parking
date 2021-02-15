@@ -3,7 +3,9 @@ package com.example.tsparking.classes;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
 import com.example.tsparking.fragments.searchingUserR;
+import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,9 +35,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-//    private EditText editTextEmail;
-//    private EditText editTextPassword;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private static String Email=null;
     private FirebaseAuth mAuth;
     private static listUsers userList ;
+    private static listSlot slotList ;
 
     EditText Tprice;
     EditText Tarea;
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     EditText TparkingNum;
     DatabaseReference refBS;
     Slot slot;
+//    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -66,13 +72,17 @@ public class MainActivity extends AppCompatActivity {
             Login_frag login_frag = new Login_frag();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+//            spinner = findViewById(R.id.spinner1);
+//            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout)
     }
 
     public static listUsers getMySingeltonM() { // create singelton
         return userList.getMySingelton();
     }
 
-    
+    public static listSlot getMySingeltonMSlot() { // create singelton
+        return slotList.getMySingelton();
+    }
 
     public void LoadPageReg() {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -111,6 +121,13 @@ public class MainActivity extends AppCompatActivity {
                     lastName=last_name;
                     Email=email;
                     myRef.setValue(u);
+
+                    SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.apply();
+
                     LoadPageProf();
 
                 } else {
@@ -146,6 +163,12 @@ public class MainActivity extends AppCompatActivity {
                         String uid = user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
+
+                        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.apply();
 
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -272,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
         String free = Tfree.getText().toString();
         String ParkingNum = TparkingNum.getText().toString();
 
-
         Boolean a = false;
         if (disable.equals("1"))
             a = true;
@@ -295,16 +317,15 @@ public class MainActivity extends AppCompatActivity {
         GoToRegisterSlot();
     }
 
-
     public void searchingUserFunc() {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new searchingUserR()).addToBackStack(null).commit();
     }
-}
 
     public void GoToRegisterSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
         AddSlot r1=new AddSlot();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
 }

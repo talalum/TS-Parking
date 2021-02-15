@@ -25,7 +25,10 @@
     <string name="Managerpage">Manager page</string>
     <string name="Addslot">Add Slot</string>
     <string name="Addparking">Add Parking</string>
-
+    <string name="No">No</string>
+    <string name="Yes">Yes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
