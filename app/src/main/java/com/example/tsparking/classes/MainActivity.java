@@ -382,23 +382,6 @@ private static listParking listparking;
 
     }
 
-    public void getParkingByNum(int parkingNum) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot parkings : snapshot.getChildren()) {
-                  if(parkingNum==parkings.getValue(Parking.class).getParkingNum()) {
-                      ParkingByNum = parkings.getValue(Parking.class);
-                  }
-                }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 
     public String getAreaByNum(int num) {
         for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
@@ -407,5 +390,14 @@ private static listParking listparking;
             return null;
 
     }
+
+    public Parking getParkingByNum(int num) {
+        for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
+            if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
+                return listparking.getMySingelton().getList().get(i);
+        return null;
+
+    }
+
 
 }

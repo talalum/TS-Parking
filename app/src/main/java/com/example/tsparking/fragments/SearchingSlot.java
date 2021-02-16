@@ -181,7 +181,7 @@ public class SearchingSlot extends Fragment {
                             if(adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
                                     adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB&&
-                                    mainActivity.getAreaByNum(adSnapshot.getValue(Slot.class).getParkingNum()).equals(areaSelected))
+                                    mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected))
                             mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                         }
                         recyclerViewSlot=(RecyclerView)view.findViewById(R.id.recycleViewSlot);
