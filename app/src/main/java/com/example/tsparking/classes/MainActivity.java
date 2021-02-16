@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
             ParkingByNum=new Parking();
             getParkingByNum(5);
-            Log.i(TAG,ParkingByNum.getArea());
+//            Log.i(TAG,ParkingByNum.getArea());
 
 
           DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
