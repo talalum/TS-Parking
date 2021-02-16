@@ -2,8 +2,11 @@ package com.example.tsparking.classes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,7 @@ import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
 import com.example.tsparking.fragments.searchingUserR;
+import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,9 +36,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
-//    private EditText editTextEmail;
-//    private EditText editTextPassword;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static String Email=null;
     private FirebaseAuth mAuth;
     private static listUsers userList ;
+    private static listSlot slotList ;
 
     EditText Tprice;
     EditText Tarea;
@@ -57,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference refBS;
     Slot slot;
 
+    private static int parkingNum=0;
+    private static int numMax=1;
+
+    private static Parking ParkingByNum;
+
+private static listParking listparking;
+    private static final String TAG = "MyActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
@@ -66,13 +81,40 @@ public class MainActivity extends AppCompatActivity {
             Login_frag login_frag = new Login_frag();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+            ParkingByNum=new Parking();
+
+          listparking=new listParking();
+          DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
+          ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot parkings : snapshot.getChildren()) {
+                    listparking.addParking(parkings.getValue(Parking.class));
+                    if(parkings.getValue(Parking.class).getParkingNum()>=numMax) {
+                        numMax=parkings.getValue(Parking.class).getParkingNum();
+                        numMax++;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+
     }
 
     public static listUsers getMySingeltonM() { // create singelton
         return userList.getMySingelton();
     }
+    public static listParking getMySingeltonParking() { // create singelton
+        return listParking.getMySingelton();
+    }
 
-    
+    public static listSlot getMySingeltonMSlot() { // create singelton
+        return slotList.getMySingelton();
+    }
 
     public void LoadPageReg() {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -111,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
                     lastName=last_name;
                     Email=email;
                     myRef.setValue(u);
+
+                    SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.apply();
+
                     LoadPageProf();
 
                 } else {
@@ -147,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
 
+                        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.apply();
+
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -156,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                                 firstName = value.getFirstName();
                                 lastName = value.getLastName();
                                 Email = value.getEmail();
-
                                 LoadPageProf();
                             }
 
@@ -245,7 +299,8 @@ public class MainActivity extends AppCompatActivity {
         parking.setArea(area);
         parking.setAddress(address);
         parking.setPaved(b);
-
+        getMaxParkingNum();
+        parking.setParkingNum(numMax);
         refB.push().setValue(parking);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterParking();
@@ -264,14 +319,12 @@ public class MainActivity extends AppCompatActivity {
         Tfree = (EditText) findViewById(R.id.FreeText);
         TparkingNum = (EditText) findViewById(R.id.ParkingNumText);
 
-        slot = new Slot();
         refBS = FirebaseDatabase.getInstance().getReference().child("Slot");
 
         String disable = Tdisable.getText().toString();
         String indoor = Tindoor.getText().toString();
         String free = Tfree.getText().toString();
         String ParkingNum = TparkingNum.getText().toString();
-
 
         Boolean a = false;
         if (disable.equals("1"))
@@ -285,26 +338,74 @@ public class MainActivity extends AppCompatActivity {
         if (free.equals("1"))
             c = true;
 
-        slot.setDisable(a);
-        slot.setIndoor(b);
-        slot.setFree(c);
-        slot.setParkingNum(Integer.parseInt(ParkingNum));
+
+        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum));
+
+//        slot.setDisable(a);
+//        slot.setIndoor(b);
+//        slot.setFree(c);
+//        slot.setParkingNum(Integer.parseInt(ParkingNum));
 
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterSlot();
     }
 
-
     public void searchingUserFunc() {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentCont, new searchingUserR()).addToBackStack(null).commit();
     }
-}
 
     public void GoToRegisterSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
         AddSlot r1=new AddSlot();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
+    public void getMaxParkingNum() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot parkings : snapshot.getChildren()) {
+                    if(parkings.getValue(Parking.class).getParkingNum()>=numMax) {
+                        numMax=parkings.getValue(Parking.class).getParkingNum();
+                        numMax++;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+    }
+
+    public void getParkingByNum(int parkingNum) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot parkings : snapshot.getChildren()) {
+                  if(parkingNum==parkings.getValue(Parking.class).getParkingNum()) {
+                      ParkingByNum = parkings.getValue(Parking.class);
+                  }
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public String getAreaByNum(int num) {
+        for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
+            if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
+                return listparking.getMySingelton().getList().get(i).getArea();
+            return null;
+
+    }
+
 }

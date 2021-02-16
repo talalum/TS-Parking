@@ -1,23 +1,37 @@
 package com.example.tsparking.classes;
 
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+
 public class Slot {
-//    private int IdSlot;
     private boolean IsDisable;
     private boolean IsIndoor;
     private boolean IsFree;
     private int ParkingNum;
-
+   // private Parking parking;
 
     public Slot() {
     }
 
-    public Slot(/*int idSlot,*/ boolean disable, boolean indoor, boolean free, int parkingNum) {
-        //IdSlot = idSlot;
+    public Slot( boolean disable, boolean indoor, boolean free, int parkingNum) {
+
         IsDisable = disable;
         IsIndoor = indoor;
         IsFree = free;
         ParkingNum = parkingNum;
+
     }
 
 
@@ -52,4 +66,5 @@ public class Slot {
     public void setParkingNum(int parkingNum) {
         ParkingNum = parkingNum;
     }
+
 }

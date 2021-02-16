@@ -16,14 +16,14 @@
         android:textSize="35dp"
         android:gravity="center"/>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
+
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:hint="@string/enteridslot"
-        android:padding="25dp"
-        android:textSize="20dp" />
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:clickable="true"
+        android:spinnerMode="dropdown"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
 
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/IsDisableCB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -41,7 +41,7 @@
             android:textSize="25sp" />
 
         <CheckBox
-            android:id="@+id/checkBox3"
+            android:id="@+id/IsFreeCB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -49,7 +49,7 @@
             android:textSize="25sp" />
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/IsIndoorCB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -58,7 +58,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/SearchingSlotBP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -76,5 +76,17 @@
         android:layout_weight="1"
         android:background="@drawable/buttonb"
         android:text="@string/back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewSlot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 </LinearLayout>

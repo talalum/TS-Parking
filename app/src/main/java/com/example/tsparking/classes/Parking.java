@@ -5,16 +5,15 @@ import java.sql.Array;
 import java.util.List;
 
 public class Parking {
-//    private int ParkingNum;
+
+
+    private int ParkingNum;
     private double price;
     private String area;
     private String address;
     private boolean paved;
 
-//    private static int counter_of_parking = 0;
-
     public Parking() {
-//        ParkingNum = ++counter_of_parking; // blank constructor
     }
 
     public Parking(double price, String area, String address, boolean paved) {
@@ -23,15 +22,18 @@ public class Parking {
         this.area = area;
         this.address = address;
         this.paved = paved;
-//        ParkingNum = ++counter_of_parking; // blank constructor
+    }
+    public Parking(int num) {
     }
 
 
-//    public int getParkingNum() {
-//        return ParkingNum;
-//    }
-//
+    public int getParkingNum() {
+        return ParkingNum;
+    }
 
+    public void setParkingNum(int parkingNum) {
+        ParkingNum = parkingNum;
+    }
 
     public double getPrice() {
         return price;
