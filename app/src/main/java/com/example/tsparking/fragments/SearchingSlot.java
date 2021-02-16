@@ -165,7 +165,9 @@ public class SearchingSlot extends Fragment {
         //    areaSelected = spinner.getSelectedItem().toString();
 
 
+
                 mainActivity.getMySingeltonMSlot().clear();
+
 
                 Query query= FirebaseDatabase.getInstance().getReference("Slot").orderByChild("ParkingNum");
 
@@ -178,8 +180,8 @@ public class SearchingSlot extends Fragment {
                         for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                             if(adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
-                                    adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB)
-                               //     mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected))
+                                    adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB&&
+                                    mainActivity.getAreaByNum(adSnapshot.getValue(Slot.class).getParkingNum()).equals(areaSelected))
                             mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                         }
                         recyclerViewSlot=(RecyclerView)view.findViewById(R.id.recycleViewSlot);

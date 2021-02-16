@@ -60,7 +60,7 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
 
     class SlotViewHolder extends RecyclerView.ViewHolder{
 
-        TextView IsDisableTPr,IsIndoorTPr,IsFreeTPr, ParkingNumTPr;
+         TextView IsDisableTPr,IsIndoorTPr,IsFreeTPr, ParkingNumTPr;
         public SlotViewHolder(@NonNull View itemView) {
             super(itemView);
             IsDisableTPr=itemView.findViewById(R.id.IsDisableTPrRecycle);
