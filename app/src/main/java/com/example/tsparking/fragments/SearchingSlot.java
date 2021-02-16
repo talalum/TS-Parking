@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,11 +101,12 @@ public class SearchingSlot extends Fragment {
                              Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_searching_slot, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
         Button BackB = (Button) view.findViewById(R.id.BackB);
         BackB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
+              //  MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.BackToProfile();
             }
         });
@@ -114,9 +116,24 @@ public class SearchingSlot extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot adSnapshot: snapshot.getChildren()) {
-                    if(!(areaList.contains(adSnapshot.getValue(Parking.class).getArea())))
+                    if(!(areaList.contains(adSnapshot.getValue(Parking.class).getArea()))) {
                         areaList.add(adSnapshot.getValue(Parking.class).getArea());
+                    }
                 }
+                spinner = view.findViewById(R.id.spinner);
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mainActivity,android.R.layout.simple_spinner_item, areaList);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        areaSelected = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
             }
 
             @Override
@@ -124,26 +141,6 @@ public class SearchingSlot extends Fragment {
             }
         });
 
-        spinner = view.findViewById(R.id.spinner);
-        ArrayAdapter<String> dataAdapter;
-        MainActivity mainActivity = (MainActivity) getActivity();
-
-        dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, areaList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            areaSelected = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(mainActivity, "aa",Toast.LENGTH_SHORT).show();
-//                Log.i(TAG, areaSelected);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         Button searchingslotbp = (Button) view.findViewById(R.id.SearchingSlotBP);
         searchingslotbp.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +162,7 @@ public class SearchingSlot extends Fragment {
                 if(IsIndoorCB.isChecked())
                     isIndoorCB = true;
 
-//                areaSelected = spinner.getSelectedItem().toString();
-//                Log.i(TAG, areaSelected);
+        //    areaSelected = spinner.getSelectedItem().toString();
 
 
                 mainActivity.getMySingeltonMSlot().clear();
@@ -182,8 +178,8 @@ public class SearchingSlot extends Fragment {
                         for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                             if(adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
-                                    adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB &&
-                                    adSnapshot.getValue(Slot.class).getArea()==areaSelected)
+                                    adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB)
+                               //     mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected))
                             mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                         }
                         recyclerViewSlot=(RecyclerView)view.findViewById(R.id.recycleViewSlot);
@@ -200,6 +196,7 @@ public class SearchingSlot extends Fragment {
                 });
             }
         });
+
 
         return view;
     }
