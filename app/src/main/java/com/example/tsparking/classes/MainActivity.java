@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static Parking ParkingByNum;
 
+private static listParking listparking;
     private static final String TAG = "MyActivity";
 
     @Override
@@ -80,15 +82,14 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
             ParkingByNum=new Parking();
-            getParkingByNum(5);
-//            Log.i(TAG,ParkingByNum.getArea());
 
-
+          listparking=new listParking();
           DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+          ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot parkings : snapshot.getChildren()) {
+                    listparking.addParking(parkings.getValue(Parking.class));
                     if(parkings.getValue(Parking.class).getParkingNum()>=numMax) {
                         numMax=parkings.getValue(Parking.class).getParkingNum();
                         numMax++;
@@ -100,10 +101,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
     }
 
     public static listUsers getMySingeltonM() { // create singelton
         return userList.getMySingelton();
+    }
+    public static listParking getMySingeltonParking() { // create singelton
+        return listParking.getMySingelton();
     }
 
     public static listSlot getMySingeltonMSlot() { // create singelton
@@ -205,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                                 firstName = value.getFirstName();
                                 lastName = value.getLastName();
                                 Email = value.getEmail();
-
                                 LoadPageProf();
                             }
 
@@ -377,22 +382,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getParkingByNum(int parkingNum) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot parkings : snapshot.getChildren()) {
-                  if(parkingNum==parkings.getValue(Parking.class).getParkingNum()) {
-                      ParkingByNum = parkings.getValue(Parking.class);
-                  }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
+    public String getAreaByNum(int num) {
+        for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
+            if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
+                return listparking.getMySingelton().getList().get(i).getArea();
+            return null;
+
+    }
+
+    public Parking getParkingByNum(int num) {
+        for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
+            if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
+                return listparking.getMySingelton().getList().get(i);
+        return null;
 
     }
 
