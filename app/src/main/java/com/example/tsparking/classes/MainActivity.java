@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tsparking.R;
 import com.example.tsparking.fragments.AddParking;
+import com.example.tsparking.fragments.AddReport;
 import com.example.tsparking.fragments.AddSlot;
 import com.example.tsparking.fragments.Login_frag;
 import com.example.tsparking.fragments.ManagerPage;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static listUsers userList ;
     private static listSlot slotList ;
+    private static listReport reportList;
+
 
     EditText Tprice;
     EditText Tarea;
@@ -126,9 +129,17 @@ private static listParking listparking;
     public static listParking getMySingeltonParking() { // create singelton
         return listParking.getMySingelton();
     }
-
     public static listSlot getMySingeltonMSlot() { // create singelton
         return slotList.getMySingelton();
+    }
+    public static listReport getMySingeltonMReport() { // create singelton
+        return reportList.getMySingelton();
+    }
+
+    public void GoToAddReportPage() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AddReport r1=new AddReport();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
     public void LoadPageReg() {
