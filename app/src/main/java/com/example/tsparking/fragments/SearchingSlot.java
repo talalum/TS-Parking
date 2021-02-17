@@ -141,7 +141,6 @@ public class SearchingSlot extends Fragment {
             }
         });
 
-
         Button searchingslotbp = (Button) view.findViewById(R.id.SearchingSlotBP);
         searchingslotbp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,12 +161,8 @@ public class SearchingSlot extends Fragment {
                 if(IsIndoorCB.isChecked())
                     isIndoorCB = true;
 
-        //    areaSelected = spinner.getSelectedItem().toString();
-
-
 
                 mainActivity.getMySingeltonMSlot().clear();
-
 
                 Query query= FirebaseDatabase.getInstance().getReference("Slot").orderByChild("ParkingNum");
 
@@ -182,7 +177,7 @@ public class SearchingSlot extends Fragment {
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
                                     adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB&&
                                     mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected))
-                            mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
+                                    mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                         }
                         recyclerViewSlot=(RecyclerView)view.findViewById(R.id.recycleViewSlot);
                         recyclerViewSlot.setHasFixedSize(true);
@@ -198,8 +193,20 @@ public class SearchingSlot extends Fragment {
                 });
             }
         });
+        recyclerViewSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-
+            }
+        });
+//        Button choose = (Button) view.findViewById(R.id.choose);
+//        choose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                recycleViewSlot.getSele
+//                mainActivity.chooseParking();
+//            }
+//        }
         return view;
     }
 }

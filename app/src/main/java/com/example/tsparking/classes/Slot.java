@@ -19,8 +19,8 @@ public class Slot {
     private boolean IsDisable;
     private boolean IsIndoor;
     private boolean IsFree;
+    private int slotNum;
     private int ParkingNum;
-   // private Parking parking;
 
     public Slot() {
     }
@@ -32,7 +32,14 @@ public class Slot {
         ParkingNum = parkingNum;
     }
 
+    public void setSlotNum(int slotNum) {
+        this.slotNum = slotNum;
+    }
 
+
+    public int getSlotNum() {
+        return slotNum;
+    }
     public boolean isDisable() {
         return IsDisable;
     }

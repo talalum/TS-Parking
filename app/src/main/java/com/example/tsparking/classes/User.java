@@ -8,6 +8,7 @@ public class User {
     private String Email;
     private String FirstName;
     private String LastName;
+    private int slotNum;
 
     public User() {
     }
@@ -16,6 +17,14 @@ public class User {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
+        slotNum=0;
+    }
+    public void setSlotNum(int slotNum) {
+        this.slotNum = slotNum;
+    }
+
+    public int getSlotNum() {
+        return slotNum;
     }
 
     public String getEmail() {

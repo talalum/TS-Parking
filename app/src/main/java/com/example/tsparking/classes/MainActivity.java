@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     Slot slot;
 
     private static int parkingNum=0;
-    private static int numMax=1;
-
+    private static int numParkingMax=1;
+    private static int numSlotMax=1;
     private static Parking ParkingByNum;
 
 private static listParking listparking;
@@ -90,9 +90,9 @@ private static listParking listparking;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot parkings : snapshot.getChildren()) {
                     listparking.addParking(parkings.getValue(Parking.class));
-                    if(parkings.getValue(Parking.class).getParkingNum()>=numMax) {
-                        numMax=parkings.getValue(Parking.class).getParkingNum();
-                        numMax++;
+                    if(parkings.getValue(Parking.class).getParkingNum()>=numParkingMax) {
+                        numParkingMax=parkings.getValue(Parking.class).getParkingNum();
+                        numParkingMax++;
                     }
                 }
             }
@@ -102,6 +102,21 @@ private static listParking listparking;
 
         });
 
+        DatabaseReference ref_2 = FirebaseDatabase.getInstance().getReference("Slot");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                        numSlotMax=slots.getValue(Slot.class).getSlotNum();
+                        numSlotMax++;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
     }
 
@@ -300,7 +315,7 @@ private static listParking listparking;
         parking.setAddress(address);
         parking.setPaved(b);
         getMaxParkingNum();
-        parking.setParkingNum(numMax);
+        parking.setParkingNum(numParkingMax);
         refB.push().setValue(parking);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterParking();
@@ -368,9 +383,9 @@ private static listParking listparking;
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot parkings : snapshot.getChildren()) {
-                    if(parkings.getValue(Parking.class).getParkingNum()>=numMax) {
-                        numMax=parkings.getValue(Parking.class).getParkingNum();
-                        numMax++;
+                    if(parkings.getValue(Parking.class).getParkingNum()>=numParkingMax) {
+                        numParkingMax=parkings.getValue(Parking.class).getParkingNum();
+                        numParkingMax++;
                     }
                 }
             }
@@ -381,7 +396,25 @@ private static listParking listparking;
         });
 
     }
+    public void getMaxSlotNum() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Slot");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                        numSlotMax=slots.getValue(Slot.class).getSlotNum();
+                        numSlotMax++;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
 
+        });
+
+    }
 
     public String getAreaByNum(int num) {
         for (int i = 0; i < listparking.getMySingelton().getList().size(); i++)
