@@ -30,4 +30,5 @@ public class listReport {
     public static int getSize() {
         return list_Report.size();
     }
+    //
 }
