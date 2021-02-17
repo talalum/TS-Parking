@@ -112,7 +112,6 @@ public class Login_frag extends Fragment {
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
 
-
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         editTextEmail.setText(sharedPreferences.getString("email",null));

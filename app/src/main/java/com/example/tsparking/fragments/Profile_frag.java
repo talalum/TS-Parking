@@ -70,7 +70,6 @@ public class Profile_frag extends Fragment {
             firstName = getArguments().getString(ARG_PARAM1);
             lastName = getArguments().getString(ARG_PARAM2);
             Email = getArguments().getString(ARG_PARAM3);
-
         }
     }
 
@@ -102,6 +101,8 @@ public class Profile_frag extends Fragment {
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.LoadSearchingSlot();
+//                mainActivity.GoToAddReportPage();
+
             }
         });
         Button logout = (Button) view.findViewById(R.id.LogOutB);

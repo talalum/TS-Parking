@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
     EditText TparkingNum;
     DatabaseReference refBS;
     Slot slot;
+
+    EditText TtheReport;
+    TextView TwriteBy;
+    EditText TslotNum;
+    DatabaseReference refBR;
+    Report report;
 
     private static int parkingNum=0;
     private static int numParkingMax=1;
@@ -364,17 +371,33 @@ private static listParking listparking;
         if (free.equals("1"))
             c = true;
 
-
+        //Parking p = getParkingByNum(Integer.parseInt(ParkingNum));
         slot = new Slot(a,b,c,Integer.parseInt(ParkingNum));
-
-//        slot.setDisable(a);
-//        slot.setIndoor(b);
-//        slot.setFree(c);
-//        slot.setParkingNum(Integer.parseInt(ParkingNum));
+        //slot = new Slot(a,b,c,Integer.parseInt(ParkingNum), p.getPrice(), p.getArea(), p.getAddress(), p.isPaved());
 
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterSlot();
+    }
+
+    public void SaveReport() {
+        TtheReport = (EditText) findViewById(R.id.ReportTP);
+        TwriteBy = (TextView) findViewById(R.id.EmailUserTP);
+        TslotNum = (EditText) findViewById(R.id.SlotNumTP);
+        refBR = FirebaseDatabase.getInstance().getReference().child("Report");
+
+        String theReport = TtheReport.getText().toString();
+        String writeBy = TwriteBy.getText().toString();
+        String slotNum = TslotNum.getText().toString();
+
+        report = new Report();
+        report.setTheReport(theReport);
+        report.setWriteBy(writeBy);
+        report.setSlotNum(Integer.valueOf(slotNum));
+
+        refBR.push().setValue(report);
+        Toast.makeText(MainActivity.this, "The report saved", Toast.LENGTH_LONG).show();
+        LoadPageProf();
     }
 
     public void searchingUserFunc() {
@@ -440,8 +463,6 @@ private static listParking listparking;
             if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
                 return listparking.getMySingelton().getList().get(i);
         return null;
-
     }
-
 
 }

@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context=".fragments.searchingUserR">
+
     <TextView
         android:id="@+id/SlotT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.8"
-        android:text="Slots"
+        android:text="Reports"
         android:textSize="30dp"
         android:gravity="center"/>
 
@@ -18,6 +21,6 @@
         android:id="@+id/recycleViewUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.2"></androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_weight="0.2"
+        android:padding="20dp"></androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

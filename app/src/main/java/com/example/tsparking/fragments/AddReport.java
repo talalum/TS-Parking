@@ -1,5 +1,7 @@
 package com.example.tsparking.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.tsparking.R;
+import com.example.tsparking.classes.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +22,7 @@ import com.example.tsparking.R;
  * create an instance of this fragment.
  */
 public class AddReport extends Fragment {
+    private TextView TexViewtEmail;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +68,21 @@ public class AddReport extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_report, container, false);
+        Button save_reportB = (Button) view.findViewById(R.id.SaveReportButton);
+        save_reportB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.SaveReport();
+            }
+        });
+
+        TexViewtEmail = view.findViewById(R.id.EmailUserTP);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        TexViewtEmail.setText(sharedPreferences.getString("email",null));
+        return view;
     }
 }

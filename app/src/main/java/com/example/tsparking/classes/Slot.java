@@ -25,12 +25,21 @@ public class Slot {
     public Slot() {
     }
 
+
     public Slot( boolean disable, boolean indoor, boolean free, int parkingNum) {
         IsDisable = disable;
         IsIndoor = indoor;
         IsFree = free;
         ParkingNum = parkingNum;
     }
+
+//    public Slot( boolean disable, boolean indoor, boolean free, int parkingNum,
+//                 double price, String area, String address, boolean paved) {
+//        IsDisable = disable;
+//        IsIndoor = indoor;
+//        IsFree = free;
+//        ParkingNum = parkingNum;
+//    }
 
     public void setSlotNum(int slotNum) {
         this.slotNum = slotNum;
