@@ -8,7 +8,7 @@ public class listUsers {
     private static listUsers Instance = new listUsers();
     private static ArrayList<User> list_Users = new ArrayList<User>(); // create a list of workers
 
-    private listUsers() {
+    listUsers() {
     }
 
     public static listUsers getMySingelton() { // create singelton

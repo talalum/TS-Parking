@@ -193,20 +193,8 @@ public class SearchingSlot extends Fragment {
                 });
             }
         });
-        recyclerViewSlot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-//        Button choose = (Button) view.findViewById(R.id.choose);
-//        choose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                recycleViewSlot.getSele
-//                mainActivity.chooseParking();
-//            }
-//        }
+
         return view;
     }
 }

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -34,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
     private FirebaseAuth mAuth;
+    private static String UID=null;
+    private static int oldNumSlot;
+
     private static listUsers userList ;
     private static listSlot slotList ;
 
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private static int numSlotMax=1;
     private static Parking ParkingByNum;
 
-private static listParking listparking;
+    private static listParking listparking;
     private static final String TAG = "MyActivity";
 
     @Override
@@ -103,11 +108,11 @@ private static listParking listparking;
         });
 
         DatabaseReference ref_2 = FirebaseDatabase.getInstance().getReference("Slot");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref_2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
-                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                    if(slots.getValue(Slot.class).getSlotNum()>=numSlotMax) {
                         numSlotMax=slots.getValue(Slot.class).getSlotNum();
                         numSlotMax++;
                     }
@@ -160,6 +165,7 @@ private static listParking listparking;
                             Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
+                    UID=user.getUid();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("Users").child(uid);
 
@@ -208,6 +214,7 @@ private static listParking listparking;
                                 Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         String uid = user.getUid();
+                        UID=user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
 
@@ -352,15 +359,8 @@ private static listParking listparking;
         Boolean c = false;
         if (free.equals("1"))
             c = true;
-
-
-        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum));
-
-//        slot.setDisable(a);
-//        slot.setIndoor(b);
-//        slot.setFree(c);
-//        slot.setParkingNum(Integer.parseInt(ParkingNum));
-
+        getMaxSlotNum();
+        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum),numSlotMax);
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterSlot();
@@ -402,7 +402,7 @@ private static listParking listparking;
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
-                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                    if(slots.getValue(Slot.class).getSlotNum()>=numSlotMax) {
                         numSlotMax=slots.getValue(Slot.class).getSlotNum();
                         numSlotMax++;
                     }
@@ -432,5 +432,52 @@ private static listParking listparking;
 
     }
 
+    public void chooseParking(int numSlot) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = database.getReference();
+
+        Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // mainActivity.clearUserList();
+                for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                    if(adSnapshot.getValue(User.class).getEmail().equals(Email)) {
+                        oldNumSlot = adSnapshot.getValue(User.class).getSlotNum();
+                        Log.i(TAG,"dds "+String.valueOf(oldNumSlot));
+
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+         mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(numSlot);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Slot");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(slots.getValue(Slot.class).getSlotNum()==numSlot) {
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(false);
+                    }
+                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot)
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+        }
 
 }
