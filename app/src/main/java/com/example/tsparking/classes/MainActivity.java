@@ -2,8 +2,10 @@ package com.example.tsparking.classes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -34,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,8 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
     private FirebaseAuth mAuth;
-    private static listUsers userList ;
-    private static listSlot slotList ;
+    private static String UID=null;
+    private static int oldNumSlot;
+    private static int slotNum;
+
+
+
+    private static listUsers listUsers ;
+    private static listSlot ListSlot ;
+    private static listParking listparking;
 
     EditText Tprice;
     EditText Tarea;
@@ -69,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
     private static int numSlotMax=1;
     private static Parking ParkingByNum;
 
-private static listParking listparking;
     private static final String TAG = "MyActivity";
 
     @Override
@@ -83,13 +92,12 @@ private static listParking listparking;
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
             ParkingByNum=new Parking();
 
-          listparking=new listParking();
+            UpdateLists();
           DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
           ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot parkings : snapshot.getChildren()) {
-                    listparking.addParking(parkings.getValue(Parking.class));
                     if(parkings.getValue(Parking.class).getParkingNum()>=numParkingMax) {
                         numParkingMax=parkings.getValue(Parking.class).getParkingNum();
                         numParkingMax++;
@@ -103,11 +111,11 @@ private static listParking listparking;
         });
 
         DatabaseReference ref_2 = FirebaseDatabase.getInstance().getReference("Slot");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref_2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
-                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                    if(slots.getValue(Slot.class).getSlotNum()>=numSlotMax) {
                         numSlotMax=slots.getValue(Slot.class).getSlotNum();
                         numSlotMax++;
                     }
@@ -121,14 +129,13 @@ private static listParking listparking;
     }
 
     public static listUsers getMySingeltonM() { // create singelton
-        return userList.getMySingelton();
+        return listUsers.getMySingelton();
     }
     public static listParking getMySingeltonParking() { // create singelton
-        return listParking.getMySingelton();
+        return listparking.getMySingelton();
     }
 
-    public static listSlot getMySingeltonMSlot() { // create singelton
-        return slotList.getMySingelton();
+    public static listSlot getMySingeltonMSlot() { return ListSlot.getMySingelton();
     }
 
     public void LoadPageReg() {
@@ -137,6 +144,66 @@ private static listParking listparking;
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
+
+    public void UpdateLists()
+    {
+        listparking=listParking.getMySingelton();
+        List<Parking> listp=listparking.getList();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot parkings : snapshot.getChildren()) {
+                    if(!listp.contains(parkings.getValue(Parking.class))) {
+                        listp.add(parkings.getValue(Parking.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+
+        listUsers=listUsers.getMySingelton();
+        List<User> listu=listUsers.getList();
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
+        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot users : snapshot.getChildren()) {
+                    if(!listu.contains(users.getValue(User.class))) {
+                        listu.add(users.getValue(User.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+
+        ListSlot=listSlot.getMySingelton();
+        List<Slot> lists=ListSlot.getList();
+        DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("Slot");
+        ref3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(!lists.contains(slots.getValue(Slot.class))) {
+                        lists.add(slots.getValue(Slot.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+    }
     public void SignUpFunc() {
         EditText emailText = findViewById(R.id.EmailRText);
         String email = emailText.getText().toString();
@@ -160,6 +227,7 @@ private static listParking listparking;
                             Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
+                    UID=user.getUid();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("Users").child(uid);
 
@@ -167,6 +235,7 @@ private static listParking listparking;
                     firstName=first_name;
                     lastName=last_name;
                     Email=email;
+                    slotNum=0;
                     myRef.setValue(u);
 
                     SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
@@ -208,6 +277,7 @@ private static listParking listparking;
                                 Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         String uid = user.getUid();
+                        UID=user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
 
@@ -226,6 +296,7 @@ private static listParking listparking;
                                 firstName = value.getFirstName();
                                 lastName = value.getLastName();
                                 Email = value.getEmail();
+                                slotNum=value.getSlotNum();
                                 LoadPageProf();
                             }
 
@@ -246,7 +317,7 @@ private static listParking listparking;
 
     public void LoadPageProf() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        Profile_frag r1= Profile_frag.newInstance(firstName,lastName,Email);
+        Profile_frag r1= Profile_frag.newInstance(firstName,lastName,Email, String.valueOf(slotNum));
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
     public void LoadManagerPage() {
@@ -352,15 +423,8 @@ private static listParking listparking;
         Boolean c = false;
         if (free.equals("1"))
             c = true;
-
-
-        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum));
-
-//        slot.setDisable(a);
-//        slot.setIndoor(b);
-//        slot.setFree(c);
-//        slot.setParkingNum(Integer.parseInt(ParkingNum));
-
+        getMaxSlotNum();
+        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum),numSlotMax);
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterSlot();
@@ -402,7 +466,7 @@ private static listParking listparking;
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
-                    if(slots.getValue(Slot.class).getParkingNum()>=numSlotMax) {
+                    if(slots.getValue(Slot.class).getSlotNum()>=numSlotMax) {
                         numSlotMax=slots.getValue(Slot.class).getSlotNum();
                         numSlotMax++;
                     }
@@ -432,5 +496,100 @@ private static listParking listparking;
 
     }
 
+    public void chooseParking(int numSlot) {
+        slotNum=numSlot;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = database.getReference();
+
+        Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // mainActivity.clearUserList();
+                for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                    if(adSnapshot.getValue(User.class).getEmail().equals(Email)) {
+                        oldNumSlot = adSnapshot.getValue(User.class).getSlotNum();
+                        mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(numSlot);
+                    }
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Slot");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(slots.getValue(Slot.class).getSlotNum()==numSlot) {
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(false);
+                    }
+                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot)
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        }
+
+    public void ReleaseSlot() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = database.getReference();
+
+        Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("FirstName");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // mainActivity.clearUserList();
+                for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                    if(adSnapshot.getValue(User.class).getEmail().equals(Email)) {
+                        oldNumSlot = adSnapshot.getValue(User.class).getSlotNum();
+                        mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(0);
+                    }
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Slot");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
+                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot)
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
+    public Slot getSlotByNum(int num) {
+        for (int i = 0; i < listSlot.getMySingelton().getList().size(); i++)
+            if (listSlot.getMySingelton().getList().get(i).getSlotNum() == num)
+                return listSlot.getMySingelton().getList().get(i);
+        return null;
+
+    }
 
 }

@@ -10,11 +10,11 @@
         android:id="@+id/SearchingSlotT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
+        android:gravity="center"
         android:padding="15dp"
         android:text="@string/searchingslot"
-        android:textSize="35dp"
-        android:gravity="center"/>
+        android:textSize="35dp" />
 
 
     <Spinner
@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:orientation="vertical">
 
 
@@ -61,7 +61,7 @@
         android:id="@+id/SearchingSlotBP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:background="@drawable/button_style"
         android:padding="20dp"
         android:text="@string/search"
@@ -73,7 +73,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:layout_margin="10dp"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:background="@drawable/buttonb"
         android:text="@string/back" />
 
