@@ -118,9 +118,10 @@ public class ShowReportR extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                //mainActivity.;
+                mainActivity.chooseParking(Integer.parseInt(NumSlot));
             }
         });
+
 
 
         return view;
