@@ -1,13 +1,10 @@
 package com.example.tsparking.classes;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +25,6 @@ import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
 import com.example.tsparking.fragments.ShowReportR;
 import com.example.tsparking.fragments.searchingUserR;
-import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,10 +36,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -55,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static listSlot slotList ;
     private static listReport reportList;
 
+    private ObserverToReport newR;
 
     EditText Tprice;
     EditText Tarea;
@@ -93,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
             Login_frag login_frag = new Login_frag();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+            newR=new ObserverToReport();
+            newR.addObserver(this);
+
             ParkingByNum=new Parking();
 
           listparking=new listParking();
@@ -158,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ShowReport(String numSlotChoose) {
-        Context context;
-        context=this;
-        setContentView(R.layout.activity_main);
-        fragmentManager = getSupportFragmentManager();
+//        Context context;
+//        context=this;
+//        setContentView(R.layout.activity_main);
+//        fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         ShowReportR r1= ShowReportR.newInstance(numSlotChoose, "a");
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
@@ -293,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void LoadSearchingSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        SearchingSlot r1=new SearchingSlot();
+        SearchingSlot r1= new SearchingSlot(newR);
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
@@ -477,4 +478,18 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        Log.i(TAG, "fff");
+
+        if(o instanceof ObserverToReport) {
+            Log.i(TAG, "Ffff");
+            List<String> l = (List<String>) arg;
+            String num = l.get(0);
+            Log.i(TAG, "TRY");
+            fragmentTransaction = fragmentManager.beginTransaction();
+            ShowReportR r1 = ShowReportR.newInstance(num, "a");
+            fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+        }
+    }
 }

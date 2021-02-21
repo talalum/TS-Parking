@@ -1,18 +1,15 @@
 package com.example.tsparking.classes;
 
         import android.content.Context;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.Button;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
 
         import com.example.tsparking.R;
-        import com.example.tsparking.fragments.ShowReportR;
 
         import java.util.List;
 
@@ -20,12 +17,14 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
 
     private Context mCtx;
     private List<Slot> listSlot;
+    private ObserverToReport newR1;
     private static final String TAG = "MyActivity";
 
 
-    public SlotAdapter(Context mCtx, List<Slot> listSlot) {
+    public SlotAdapter(Context mCtx, List<Slot> listSlot, ObserverToReport newR) {
         this.mCtx = mCtx;
         this.listSlot = listSlot;
+        this.newR1=newR;
     }
 
     @NonNull
@@ -59,10 +58,9 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity=new MainActivity();
                 Slot slot=listSlot.get(position);
                 String numSlotChoose=String.valueOf(slot.getSlotNum());
-                mainActivity.ShowReport(numSlotChoose);
+                newR1.show(numSlotChoose);
             }
         });
     }
