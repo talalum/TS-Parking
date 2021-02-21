@@ -1,15 +1,18 @@
 package com.example.tsparking.classes;
 
         import android.content.Context;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.widget.Button;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
 
         import com.example.tsparking.R;
+        import com.example.tsparking.fragments.ShowReportR;
 
         import java.util.List;
 
@@ -17,6 +20,8 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
 
     private Context mCtx;
     private List<Slot> listSlot;
+    private static final String TAG = "MyActivity";
+
 
     public SlotAdapter(Context mCtx, List<Slot> listSlot) {
         this.mCtx = mCtx;
@@ -51,6 +56,15 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
             holder.IsFreeTPr.setText("X");
 
         holder.ParkingNumTPr.setText(String.valueOf(slot.getParkingNum()));
+        holder.v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity=new MainActivity();
+                Slot slot=listSlot.get(position);
+                String numSlotChoose=String.valueOf(slot.getSlotNum());
+                mainActivity.ShowReport(numSlotChoose);
+            }
+        });
     }
 
     @Override
@@ -59,14 +73,15 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
     }
 
     class SlotViewHolder extends RecyclerView.ViewHolder{
-
          TextView IsDisableTPr,IsIndoorTPr,IsFreeTPr, ParkingNumTPr;
+         View v;
         public SlotViewHolder(@NonNull View itemView) {
             super(itemView);
             IsDisableTPr=itemView.findViewById(R.id.IsDisableTPrRecycle);
             IsIndoorTPr=itemView.findViewById(R.id.IsIndoorTPrRecycle);
             IsFreeTPr=itemView.findViewById(R.id.IsFreeTPrRecycle);
             ParkingNumTPr=itemView.findViewById(R.id.ParkingNumTPrRecycle);
+            v = itemView;
         }
     }
 }

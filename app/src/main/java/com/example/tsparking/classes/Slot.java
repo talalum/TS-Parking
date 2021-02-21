@@ -25,7 +25,6 @@ public class Slot {
     public Slot() {
     }
 
-
     public Slot( boolean disable, boolean indoor, boolean free, int parkingNum) {
         IsDisable = disable;
         IsIndoor = indoor;

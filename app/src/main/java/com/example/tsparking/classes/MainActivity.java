@@ -1,5 +1,6 @@
 package com.example.tsparking.classes;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
+import com.example.tsparking.fragments.ShowReportR;
 import com.example.tsparking.fragments.searchingUserR;
 import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private static int numSlotMax=1;
     private static Parking ParkingByNum;
 
-private static listParking listparking;
+    private static listParking listparking;
     private static final String TAG = "MyActivity";
 
     @Override
@@ -152,6 +154,16 @@ private static listParking listparking;
     public void LoadPageReg() {
         fragmentTransaction = fragmentManager.beginTransaction();
         Register_frag r1=new Register_frag();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+    }
+
+    public void ShowReport(String numSlotChoose) {
+        Context context;
+        context=this;
+        setContentView(R.layout.activity_main);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        ShowReportR r1= ShowReportR.newInstance(numSlotChoose, "a");
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 

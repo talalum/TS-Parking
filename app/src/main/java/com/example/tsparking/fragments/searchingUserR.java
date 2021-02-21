@@ -78,8 +78,6 @@ public class searchingUserR extends Fragment {
         adapterUser=new UserAdapter(view.getContext(),listUser.getList());
         recyclerViewUser.setAdapter(adapterUser);
 
-
         return view;
-    }
-
+        }
     }

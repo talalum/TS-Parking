@@ -6,7 +6,7 @@
     android:layout_margin="10dp"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".fragments.searchingUserR">
+    tools:context=".fragments.ShowReportR">
 
     <TextView
         android:id="@+id/SlotT"
@@ -18,7 +18,7 @@
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewUser"
+        android:id="@+id/recycleViewReport"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.2"
