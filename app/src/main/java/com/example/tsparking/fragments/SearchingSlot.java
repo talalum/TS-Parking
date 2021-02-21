@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,10 +170,18 @@ public class SearchingSlot extends Fragment {
                         @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                            double price= mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getPrice();
+                            if(finalIsFreeCB==true) {
+                                if (adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
+                                        adSnapshot.getValue(Slot.class).isIndoor() == finalIsIndoorCB && price == 0.0 && mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected) &&
+                                        adSnapshot.getValue(Slot.class).isFree() == true)
+                                    mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
+                            }
+                                else
                             if(adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
-                                    adSnapshot.getValue(Slot.class).isFree()== finalIsFreeCB&&
-                                    mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected))
+                                    mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected)&&
+                                    adSnapshot.getValue(Slot.class).isFree()== true)
                                     mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                         }
                         recyclerViewSlot=(RecyclerView)view.findViewById(R.id.recycleViewSlot);

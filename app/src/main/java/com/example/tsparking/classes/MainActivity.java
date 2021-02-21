@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     public void GoToAddReportPage() {
         fragmentTransaction = fragmentManager.beginTransaction();
+        Log.i(TAG,"?GXGg");
         AddReport r1=new AddReport();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
@@ -545,19 +546,17 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.i(TAG, "fff");
-
         if(o instanceof ObserverToReport) {
-            Log.i(TAG, "Ffff");
             List<String> l = (List<String>) arg;
             String num = l.get(0);
-            Log.i(TAG, "TRY");
             fragmentTransaction = fragmentManager.beginTransaction();
             ShowReportR r1 = ShowReportR.newInstance(num, "a");
             fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
         }
     }
     public void chooseParking(int numSlot) {
+
+
         slotNum=numSlot;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
@@ -571,6 +570,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                     if(adSnapshot.getValue(User.class).getEmail().equals(Email)) {
                         oldNumSlot = adSnapshot.getValue(User.class).getSlotNum();
+                        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("numSlot", String.valueOf(oldNumSlot));
+                        editor.apply();
+
                         mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(numSlot);
                     }
 
@@ -592,8 +596,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
                     if(slots.getValue(Slot.class).getSlotNum()==numSlot) {
                         mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(false);
                     }
-                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot)
+                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot) {
                         mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+                        if(oldNumSlot!=0)
+                           GoToAddReportPage();
+                    }
+
 
                 }
             }
@@ -617,6 +625,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                     if(adSnapshot.getValue(User.class).getEmail().equals(Email)) {
                         oldNumSlot = adSnapshot.getValue(User.class).getSlotNum();
+                        SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("numSlot", String.valueOf(oldNumSlot));
+                        editor.apply();
                         mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(0);
                     }
 
@@ -634,8 +646,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
-                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot)
+                    if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot) {
+
                         mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+                        GoToAddReportPage();
+                    }
+
 
                 }
             }

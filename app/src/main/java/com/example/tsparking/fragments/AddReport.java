@@ -23,6 +23,8 @@ import com.example.tsparking.classes.MainActivity;
  */
 public class AddReport extends Fragment {
     private TextView TexViewtEmail;
+    private TextView SlotNumText;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,6 +71,7 @@ public class AddReport extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_report, container, false);
+
         Button save_reportB = (Button) view.findViewById(R.id.SaveReportButton);
         save_reportB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,9 @@ public class AddReport extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         TexViewtEmail.setText(sharedPreferences.getString("email",null));
+
+        SlotNumText = view.findViewById(R.id.SlotNumTP);
+        SlotNumText.setText(sharedPreferences.getString("numSlot",null));
         return view;
     }
 }
