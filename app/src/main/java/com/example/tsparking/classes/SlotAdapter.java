@@ -24,11 +24,9 @@ package com.example.tsparking.classes;
 
 public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder>{
 
-    private static final String TAG = "mYtrySAPIR";
     private Context mCtx;
     private List<Slot> listSlot;
     private ObserverToReport newR1;
-    private static final String TAG = "MyActivity";
 
 
     public SlotAdapter(Context mCtx, List<Slot> listSlot, ObserverToReport newR) {
