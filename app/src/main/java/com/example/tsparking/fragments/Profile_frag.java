@@ -4,14 +4,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
+import com.example.tsparking.classes.Parking;
+import com.example.tsparking.classes.Slot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,22 +30,35 @@ public class Profile_frag extends Fragment {
     TextView firstNameT;
     TextView lastNameT;
     TextView emailT;
+    TextView slotNumT;
+    TextView AreaT;
+    TextView freeT;
+    TextView disabledT;
+
+    private static final String TAG = "MyActivity";
+
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
+    private static final String ARG_PARAM4 = "param4";
+
 
 
     // TODO: Rename and change types of parameters
     private static String firstName;
     private static String lastName;
     private static String Email;
+    private static int slotNum;
+
 
     public Profile_frag() {
         // Required empty public constructor
     }
 
-    public Profile_frag(String firstName, String lastName, String email) {
+
+    public Profile_frag(String firstName, String lastName, String email, int slotNum) {
     }
 
     /**
@@ -53,12 +70,13 @@ public class Profile_frag extends Fragment {
      * @return A new instance of fragment Profile_frag.
      */
     // TODO: Rename and change types and number of parameters
-    public static Profile_frag newInstance(String param1, String param2,String param3) {
-        Profile_frag fragment = new Profile_frag(firstName,lastName,Email);
+    public static Profile_frag newInstance(String param1, String param2,String param3,String param4) {
+        Profile_frag fragment = new Profile_frag(firstName,lastName,Email,slotNum);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         args.putString(ARG_PARAM3, param3);
+        args.putString(ARG_PARAM4, param4);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +88,7 @@ public class Profile_frag extends Fragment {
             firstName = getArguments().getString(ARG_PARAM1);
             lastName = getArguments().getString(ARG_PARAM2);
             Email = getArguments().getString(ARG_PARAM3);
+            slotNum = Integer.parseInt(getArguments().getString(ARG_PARAM4));
         }
     }
 
@@ -86,6 +105,25 @@ public class Profile_frag extends Fragment {
         lastNameT.setText(lastName);
         emailT=(TextView)view.findViewById(R.id.EmailTPr);
         emailT.setText(Email);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if(slotNum!=0) {
+            LinearLayout saved=view.findViewById(R.id.slotSaved);
+            saved.setVisibility(0);
+            Slot slot = mainActivity.getSlotByNum(slotNum);
+            Parking parking = mainActivity.getParkingByNum(slot.getParkingNum());
+
+            AreaT = (TextView) view.findViewById(R.id.areaSlotSaved);
+            AreaT.setText(parking.getArea());
+
+            freeT= (TextView) view.findViewById(R.id.freeSlotSaved);
+            freeT.setText(String.valueOf(parking.getPrice()));
+
+            disabledT= (TextView) view.findViewById(R.id.disableSlotSaved);
+            if(slot.isDisable()==true)
+                disabledT.setText("X");
+
+        }
         Button search_user_button = (Button) view.findViewById(R.id.SearchingUserB);
         search_user_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +149,15 @@ public class Profile_frag extends Fragment {
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.LogOutFunc();
+            }
+        });
+
+        Button release = (Button) view.findViewById(R.id.releaseSlot);
+        release.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.ReleaseSlot();
             }
         });
         return view;

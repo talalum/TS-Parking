@@ -16,10 +16,19 @@
         android:text="@string/searchingslot"
         android:textSize="35dp" />
 
+<!-- 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:clickable="true"
+        android:spinnerMode="dropdown"/> -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:orientation="vertical">
 
 
@@ -67,7 +76,17 @@
         android:text="@string/search"
         android:textSize="25dp" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/BackB"
+        android:layout_width="78dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:layout_weight="1.1"
+        android:background="@drawable/buttonb"
+        android:text="@string/back" />
+
+  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -90,7 +109,7 @@
             android:layout_weight="0.4"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
-    <Button
+<!--     <Button
         android:id="@+id/BackB"
         android:layout_width="78dp"
         android:layout_height="match_parent"
@@ -98,6 +117,6 @@
         android:layout_margin="10dp"
         android:layout_weight="1.25"
         android:background="@drawable/buttonb"
-        android:text="@string/back" />
+        android:text="@string/back" /> -->
 
 </LinearLayout>

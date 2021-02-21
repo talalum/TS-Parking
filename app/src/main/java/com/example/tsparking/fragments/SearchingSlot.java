@@ -190,6 +190,7 @@ public class SearchingSlot extends Fragment {
             }
         });
 
+
         return view;
     }
 }

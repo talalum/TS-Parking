@@ -25,10 +25,11 @@ public class Slot {
     public Slot() {
     }
 
-    public Slot( boolean disable, boolean indoor, boolean free, int parkingNum) {
+    public Slot( boolean disable, boolean indoor, boolean free, int parkingNum,int slotnum) {
         IsDisable = disable;
         IsIndoor = indoor;
         IsFree = free;
+        slotNum=slotnum;
         ParkingNum = parkingNum;
     }
 
