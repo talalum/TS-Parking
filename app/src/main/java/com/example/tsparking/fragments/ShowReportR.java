@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
@@ -103,6 +104,24 @@ public class ShowReportR extends Fragment {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
+        Button BackB = (Button) view.findViewById(R.id.BackB);
+        BackB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.LoadSearchingSlot();
+            }
+        });
+
+        Button chooseSlot = (Button) view.findViewById(R.id.chooseSlotB);
+        chooseSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                //mainActivity.;
+            }
+        });
+
 
         return view;
     }
