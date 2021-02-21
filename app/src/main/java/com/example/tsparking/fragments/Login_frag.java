@@ -88,36 +88,17 @@ public class Login_frag extends Fragment {
                 mainActivity.SignInFunc(view);
             }
         });
-
-
-        /*Button registerParking = (Button) view.findViewById(R.id.RegisterParkingB);
-        registerParking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.GoToRegisterParking();
-            }
-        });
-
-        Button registerSlot = (Button) view.findViewById(R.id.RegisterSlotB);
-        registerSlot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.GoToRegisterSlot();
-            }
-        });*/
-
         editTextEmail = view.findViewById(R.id.EmailText);
         editTextPassword = view.findViewById(R.id.PasswordText);
         buttonLogin = view.findViewById(R.id.LoginB);
-
 
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         editTextEmail.setText(sharedPreferences.getString("email",null));
         editTextPassword.setText(sharedPreferences.getString("password",null));
-
+        if(!(editTextEmail.getText().toString().equals("")) &&!(editTextPassword.getText().toString().equals(""))) {
+            buttonLogin.setEnabled(true);
+        }
         editTextEmail.addTextChangedListener(loginTextWatcher);
         editTextPassword.addTextChangedListener(loginTextWatcher);
         return view;

@@ -3,11 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.searchingUserR">
+    <TextView
+        android:id="@+id/SlotT"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:text="Users"
+        android:textSize="30dp"
+        android:gravity="center"/>
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycleViewUser"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"></androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

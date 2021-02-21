@@ -139,6 +139,8 @@ public class Profile_frag extends Fragment {
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.LoadSearchingSlot();
+//                mainActivity.GoToAddReportPage();
+
             }
         });
         Button logout = (Button) view.findViewById(R.id.LogOutB);

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tsparking.R;
 import com.example.tsparking.fragments.AddParking;
+import com.example.tsparking.fragments.AddReport;
 import com.example.tsparking.fragments.AddSlot;
 import com.example.tsparking.fragments.Login_frag;
 import com.example.tsparking.fragments.ManagerPage;
@@ -25,8 +28,8 @@ import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
 import com.example.tsparking.fragments.SearchingUser;
+import com.example.tsparking.fragments.ShowReportR;
 import com.example.tsparking.fragments.searchingUserR;
-import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,10 +42,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -50,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
     private static String lastName=null;
     private static String Email=null;
     private FirebaseAuth mAuth;
+
     private static String UID=null;
     private static int oldNumSlot;
     private static int slotNum;
-
-
+    private static listReport reportList;
+    private ObserverToReport newR;
 
     private static listUsers listUsers ;
     private static listSlot ListSlot ;
@@ -74,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference refBS;
     Slot slot;
 
+    EditText TtheReport;
+    TextView TwriteBy;
+    EditText TslotNum;
+    DatabaseReference refBR;
+    Report report;
+
     private static int parkingNum=0;
     private static int numParkingMax=1;
     private static int numSlotMax=1;
@@ -90,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
             Login_frag login_frag = new Login_frag();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentCont, login_frag).commit();
+            newR=new ObserverToReport();
+            newR.addObserver(this);
+
             ParkingByNum=new Parking();
 
             UpdateLists();
@@ -135,7 +149,18 @@ public class MainActivity extends AppCompatActivity {
         return listparking.getMySingelton();
     }
 
+
     public static listSlot getMySingeltonMSlot() { return ListSlot.getMySingelton();
+    }
+  
+    public static listReport getMySingeltonMReport() { // create singelton
+        return reportList.getMySingelton();
+    }
+
+    public void GoToAddReportPage() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AddReport r1=new AddReport();
+        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
     public void LoadPageReg() {
@@ -143,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         Register_frag r1=new Register_frag();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
 
 
     public void UpdateLists()
@@ -334,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void LoadSearchingSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        SearchingSlot r1=new SearchingSlot();
+        SearchingSlot r1= new SearchingSlot(newR);
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
@@ -423,11 +449,33 @@ public class MainActivity extends AppCompatActivity {
         Boolean c = false;
         if (free.equals("1"))
             c = true;
+
         getMaxSlotNum();
         slot = new Slot(a,b,c,Integer.parseInt(ParkingNum),numSlotMax);
+
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
         GoToRegisterSlot();
+    }
+
+    public void SaveReport() {
+        TtheReport = (EditText) findViewById(R.id.ReportTP);
+        TwriteBy = (TextView) findViewById(R.id.EmailUserTP);
+        TslotNum = (EditText) findViewById(R.id.SlotNumTP);
+        refBR = FirebaseDatabase.getInstance().getReference().child("Report");
+
+        String theReport = TtheReport.getText().toString();
+        String writeBy = TwriteBy.getText().toString();
+        String slotNum = TslotNum.getText().toString();
+
+        report = new Report();
+        report.setTheReport(theReport);
+        report.setWriteBy(writeBy);
+        report.setSlotNum(Integer.valueOf(slotNum));
+
+        refBR.push().setValue(report);
+        Toast.makeText(MainActivity.this, "The report saved", Toast.LENGTH_LONG).show();
+        LoadPageProf();
     }
 
     public void searchingUserFunc() {
@@ -493,9 +541,22 @@ public class MainActivity extends AppCompatActivity {
             if (listparking.getMySingelton().getList().get(i).getParkingNum() == num)
                 return listparking.getMySingelton().getList().get(i);
         return null;
-
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        Log.i(TAG, "fff");
+
+        if(o instanceof ObserverToReport) {
+            Log.i(TAG, "Ffff");
+            List<String> l = (List<String>) arg;
+            String num = l.get(0);
+            Log.i(TAG, "TRY");
+            fragmentTransaction = fragmentManager.beginTransaction();
+            ShowReportR r1 = ShowReportR.newInstance(num, "a");
+            fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
+        }
+    }
     public void chooseParking(int numSlot) {
         slotNum=numSlot;
         FirebaseDatabase database = FirebaseDatabase.getInstance();

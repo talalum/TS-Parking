@@ -28,12 +28,8 @@
     <string name="No">No</string>
     <string name="Yes">Yes</string>
     <string name="choose">Choose slot</string>
-
+    <string name="Writereport">Enter your report here..</string>
+    <string name="Savereport">Save report</string>
     <string name="Release">Release slot</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
+  
 </resources>

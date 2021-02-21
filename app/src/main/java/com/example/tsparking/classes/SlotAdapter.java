@@ -27,10 +27,14 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
     private static final String TAG = "mYtrySAPIR";
     private Context mCtx;
     private List<Slot> listSlot;
+    private ObserverToReport newR1;
+    private static final String TAG = "MyActivity";
 
-    public SlotAdapter(Context mCtx, List<Slot> listSlot) {
+
+    public SlotAdapter(Context mCtx, List<Slot> listSlot, ObserverToReport newR) {
         this.mCtx = mCtx;
         this.listSlot = listSlot;
+        this.newR1=newR;
     }
 
     @NonNull
@@ -61,53 +65,20 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
             holder.IsFreeTPr.setText("X");
 
         holder.ParkingNumTPr.setText(String.valueOf(slot.getParkingNum()));
-//        final String Useruid = getRef(position).getKey();
         holder.v.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity=new MainActivity();
                 Slot slot=listSlot.get(position);
-                int numParkingChoose=slot.getSlotNum();
-                mainActivity.chooseParking(numParkingChoose);
-                Button b= view.findViewById(R.id.choose);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                     //   Log.i(TAG,String.valueOf(position));
-                        Slot slot=listSlot.get(position);
-//                        int num=slot.getSlotNum();
-//                         Log.i(TAG,String.valueOf(slot.getSlotNum()));
-//                         listUsers listuser=new listUsers();
-//                         List<User> list=listuser.getList();
-//                        SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
-//                        String email=sharedPreferences.getString("email",null);
-//                         for(int i=0;i<list.size();i++) {
-//                             if (email.equals(list.get(i).getEmail())) {
-//                                 list.get(i).setSlotNum(num);
-//                                 Log.i(TAG,"succes1");
-//
-//                             }
-//                         }
-//                        Query query= FirebaseDatabase.getInstance().getReference("Users").orderByChild("Email");
-//                         String uid=null;
-//                        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                                for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
-////                                    if(email.equals(adSnapshot.getValue(User.class).getEmail()))
-////                                      //  uid=adSnapshot.getValue(User.class)
-////
-////                                }
-//
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//                            }
-//                        });
-                    }
-                });
+                String numSlotChoose=String.valueOf(slot.getSlotNum());
+                newR1.show(numSlotChoose);
+              
+
+              
+//                 MainActivity mainActivity=new MainActivity();
+//                 Slot slot=listSlot.get(position);
+//                 int numParkingChoose=slot.getSlotNum();
+//                 mainActivity.chooseParking(numParkingChoose);   
+
             }
         });
     }
@@ -118,7 +89,6 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
     }
 
     class SlotViewHolder extends RecyclerView.ViewHolder{
-
          TextView IsDisableTPr,IsIndoorTPr,IsFreeTPr, ParkingNumTPr;
          View v;
         public SlotViewHolder(@NonNull View itemView) {

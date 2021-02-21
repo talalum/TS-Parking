@@ -85,8 +85,6 @@ public class SearchingUser extends Fragment {
             }
         });
 
-
-
         Button searching = (Button) view.findViewById(R.id.searchB);
         searching.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +109,6 @@ public class SearchingUser extends Fragment {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 

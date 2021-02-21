@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tsparking.R;
 import com.example.tsparking.classes.MainActivity;
 import com.example.tsparking.classes.Parking;
 import com.example.tsparking.classes.Slot;
 import com.example.tsparking.classes.SlotAdapter;
-import com.example.tsparking.classes.User;
-import com.example.tsparking.classes.UserAdapter;
 import com.example.tsparking.classes.listSlot;
-import com.example.tsparking.classes.listUsers;
-import com.google.android.gms.common.util.Strings;
+import com.example.tsparking.classes.ObserverToReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +45,7 @@ public class SearchingSlot extends Fragment {
     private ArrayList<String> areaList =new ArrayList<String>();
 
     private Spinner spinner;
+    private ObserverToReport newR2;
     private static String areaSelected = null;
 
 
@@ -67,6 +60,9 @@ public class SearchingSlot extends Fragment {
 
     public SearchingSlot() {
         // Required empty public constructor
+    }
+    public SearchingSlot(ObserverToReport newR) {
+        newR2=newR;
     }
 
     /**
@@ -183,7 +179,7 @@ public class SearchingSlot extends Fragment {
                         recyclerViewSlot.setHasFixedSize(true);
                         recyclerViewSlot.setLayoutManager(new LinearLayoutManager(view.getContext()));
                         listSlot listslot=mainActivity.getMySingeltonMSlot();
-                        adapterSlot=new SlotAdapter(view.getContext(),listslot.getList());
+                        adapterSlot=new SlotAdapter(view.getContext(),listslot.getList(),newR2);
                         recyclerViewSlot.setAdapter(adapterSlot);
                     }
 
