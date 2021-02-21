@@ -2,12 +2,8 @@ package com.example.tsparking.classes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
-
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,9 +23,7 @@ import com.example.tsparking.fragments.ManagerPage;
 import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
-import com.example.tsparking.fragments.SearchingUser;
 import com.example.tsparking.fragments.ShowReportR;
-import com.example.tsparking.fragments.searchingUserR;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -61,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private static listReport reportList;
     private ObserverToReport newR;
 
-    private static listUsers listUsers ;
     private static listSlot ListSlot ;
     private static listParking listparking;
 
@@ -142,9 +135,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     }
 
-    public static listUsers getMySingeltonM() { // create singelton
-        return listUsers.getMySingelton();
-    }
     public static listParking getMySingeltonParking() { // create singelton
         return listparking.getMySingelton();
     }
@@ -183,25 +173,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 for (DataSnapshot parkings : snapshot.getChildren()) {
                     if(!listp.contains(parkings.getValue(Parking.class))) {
                         listp.add(parkings.getValue(Parking.class));
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-
-        });
-
-
-        listUsers=listUsers.getMySingelton();
-        List<User> listu=listUsers.getList();
-        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
-        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot users : snapshot.getChildren()) {
-                    if(!listu.contains(users.getValue(User.class))) {
-                        listu.add(users.getValue(User.class));
                     }
                 }
             }
@@ -353,12 +324,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
-    public void LoadSearchingUser() {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        SearchingUser r1=new SearchingUser();
-        fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
-    }
-
     public void LoadSearchingSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
         SearchingSlot r1= new SearchingSlot(newR);
@@ -479,10 +444,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         LoadPageProf();
     }
 
-    public void searchingUserFunc() {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentCont, new searchingUserR()).addToBackStack(null).commit();
-    }
 
     public void GoToRegisterSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
