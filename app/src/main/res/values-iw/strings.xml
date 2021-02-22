@@ -32,6 +32,9 @@
     <string name="Savereport">שמור משוב</string>
     <string name="Release">שחרור חנייה</string>
     <string name="messageDialog">האם אתה עדיין חונה ב</string>
+    <string name="Writeby">נכתב על ידי: </string>
+    <string name="Report">דיווח</string>
+    <string name="DateOfCreate">תאריך יצירה:"</string>
 
 
 

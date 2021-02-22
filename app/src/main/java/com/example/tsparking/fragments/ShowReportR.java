@@ -92,7 +92,7 @@ public class ShowReportR extends Fragment {
                         for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                             if(adSnapshot.getValue(Report.class).getSlotNum() == Integer.parseInt(NumSlot)) {
                                 mainActivity.getMySingeltonMReport().addReport(adSnapshot.getValue(Report.class));
-                                Log.i(TAG, adSnapshot.getValue(Report.class).getTheReport());
+//                              Log.i(TAG, adSnapshot.getValue(Report.class).getTheReport());
                             }
                         }
                         recyclerViewReport=(RecyclerView)view.findViewById(R.id.recycleViewReport);

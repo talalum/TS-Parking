@@ -6,6 +6,9 @@ public class Report {
     private String TheReport;
     private	String WriteBy;
     private int SlotNum;
+    private String DateOfCreate;
+
+
 
 
     public Report(String theReport, String writeBy, int slotNum) {
@@ -40,5 +43,13 @@ public class Report {
 
     public void setSlotNum(int slotNum) {
         SlotNum = slotNum;
+    }
+
+    public String getDateOfCreate() {
+        return DateOfCreate;
+    }
+
+    public void setDateOfCreate(String dateOfCreate) {
+        DateOfCreate = dateOfCreate;
     }
 }
