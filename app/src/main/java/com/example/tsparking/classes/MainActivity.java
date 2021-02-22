@@ -20,6 +20,7 @@ import com.example.tsparking.fragments.AddReport;
 import com.example.tsparking.fragments.AddSlot;
 import com.example.tsparking.fragments.Login_frag;
 import com.example.tsparking.fragments.ManagerPage;
+import com.example.tsparking.fragments.MyDialogFragment;
 import com.example.tsparking.fragments.Profile_frag;
 import com.example.tsparking.fragments.Register_frag;
 import com.example.tsparking.fragments.SearchingSlot;
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private static int numParkingMax=1;
     private static int numSlotMax=1;
     private static Parking ParkingByNum;
+
+    private static MyDialogFragment myDialogFragment=new MyDialogFragment();
+
 
     private static final String TAG = "MyActivity";
 
@@ -279,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
                         UID=user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Users").child(uid);
-
                         SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("email", email);
@@ -296,6 +299,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
                                 lastName = value.getLastName();
                                 Email = value.getEmail();
                                 slotNum=value.getSlotNum();
+
+                                SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+
+                                editor.putString("SaveSlot", String.valueOf(slotNum));
+                                editor.apply();
                                 LoadPageProf();
                             }
 
@@ -635,4 +643,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     }
 
+    public void OpendialogFunc() {
+        myDialogFragment=new MyDialogFragment();
+        myDialogFragment.show(getSupportFragmentManager(),"myFragmentDialog");
+    }
+
+    public void closeDialogFunc() {
+        myDialogFragment.dismiss();
+    }
 }
