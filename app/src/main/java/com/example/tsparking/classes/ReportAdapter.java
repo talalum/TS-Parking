@@ -36,6 +36,7 @@ public class ReportAdapter  extends RecyclerView.Adapter<ReportAdapter.ReportVie
         Report report =listReport.get(position);
         holder.TheReport.setText(report.getTheReport());
         holder.WriteBy.setText(report.getWriteBy());
+        holder.DateOfCreate.setText(report.getDateOfCreate());
 
     }
 
@@ -46,11 +47,12 @@ public class ReportAdapter  extends RecyclerView.Adapter<ReportAdapter.ReportVie
 
     class ReportViewHolder extends RecyclerView.ViewHolder{
 
-        TextView TheReport, WriteBy;
+        TextView TheReport, WriteBy, DateOfCreate;
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             TheReport=itemView.findViewById(R.id.ReportTPrRecycle);
             WriteBy=itemView.findViewById(R.id.UserEmailTPrRecycle);
+            DateOfCreate=itemView.findViewById(R.id.DateOfCreateTPrRecycle);
         }
     }
 }

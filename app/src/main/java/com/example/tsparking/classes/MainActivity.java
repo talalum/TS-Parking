@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -433,11 +434,15 @@ public class MainActivity extends AppCompatActivity implements Observer {
         String theReport = TtheReport.getText().toString();
         String writeBy = TwriteBy.getText().toString();
         String slotNum = TslotNum.getText().toString();
+        Date date = new Date();
+        String today = String.valueOf(date);
 
         report = new Report();
         report.setTheReport(theReport);
         report.setWriteBy(writeBy);
         report.setSlotNum(Integer.valueOf(slotNum));
+        report.setDateOfCreate(today);
+
 
         refBR.push().setValue(report);
         Toast.makeText(MainActivity.this, "The report saved", Toast.LENGTH_LONG).show();

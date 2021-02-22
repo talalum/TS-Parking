@@ -32,6 +32,9 @@
     <string name="Savereport">Save report</string>
     <string name="Release">Release slot</string>
     <string name="messageDialog">Are you still park in</string>
+    <string name="Writeby">Write by</string>
+    <string name="Report">Report</string>
+    <string name="DateOfCreate">Date of create:"</string>
 
 
 </resources>
