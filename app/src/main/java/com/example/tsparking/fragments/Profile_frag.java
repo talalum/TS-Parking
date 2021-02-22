@@ -1,5 +1,6 @@
 package com.example.tsparking.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -107,6 +108,9 @@ public class Profile_frag extends Fragment {
         emailT.setText(Email);
 
         MainActivity mainActivity = (MainActivity) getActivity();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         if(slotNum!=0) {
             LinearLayout saved=view.findViewById(R.id.slotSaved);
             saved.setVisibility(0);
@@ -124,14 +128,6 @@ public class Profile_frag extends Fragment {
                 disabledT.setText("X");
 
         }
-        Button search_user_button = (Button) view.findViewById(R.id.SearchingUserB);
-        search_user_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.LoadSearchingUser();
-            }
-        });
 
         Button SearchingSlotB = (Button) view.findViewById(R.id.SearchingSlotB);
         SearchingSlotB.setOnClickListener(new View.OnClickListener() {

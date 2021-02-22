@@ -83,6 +83,8 @@ public class ShowReportR extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_report_r, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
+
+        mainActivity.getMySingeltonMReport().clear();
                 Query query= FirebaseDatabase.getInstance().getReference("Report");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
