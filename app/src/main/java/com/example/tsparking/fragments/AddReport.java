@@ -86,7 +86,6 @@ public class AddReport extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         TexViewtEmail.setText(sharedPreferences.getString("email",null));
-
         SlotNumText = view.findViewById(R.id.SlotNumTP);
         SlotNumText.setText(sharedPreferences.getString("numSlot",null));
         return view;

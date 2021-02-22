@@ -109,9 +109,9 @@ public class Profile_frag extends Fragment {
 
         MainActivity mainActivity = (MainActivity) getActivity();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         if(slotNum!=0) {
+
+            mainActivity.OpendialogFunc();
             LinearLayout saved=view.findViewById(R.id.slotSaved);
             saved.setVisibility(0);
             Slot slot = mainActivity.getSlotByNum(slotNum);
@@ -128,6 +128,7 @@ public class Profile_frag extends Fragment {
                 disabledT.setText("X");
 
         }
+
 
         Button SearchingSlotB = (Button) view.findViewById(R.id.SearchingSlotB);
         SearchingSlotB.setOnClickListener(new View.OnClickListener() {
