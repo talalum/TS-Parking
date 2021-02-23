@@ -10,21 +10,12 @@
         android:id="@+id/SearchingSlotT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.6"
+        android:layout_weight="1.5"
         android:textStyle="bold"
         android:gravity="center"
         android:padding="15dp"
         android:text="@string/searchingslot"
         android:textSize="25dp" />
-
-<!-- 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:clickable="true"
-        android:spinnerMode="dropdown"/> -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,10 +28,11 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:background="@android:drawable/btn_dropdown"
             android:clickable="true"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            />
 
         <CheckBox
             android:id="@+id/IsDisableCB"
@@ -71,10 +63,10 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/button_style"
-            android:padding="10dp"
+            android:background="@drawable/border_button"
             android:text="@string/search"
             android:textSize="15dp"
+            android:layout_gravity="center"
             android:textStyle="bold" />
 
         <Button
@@ -83,8 +75,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/buttonb"
+            android:layout_weight="0.9"
+            android:background="@drawable/border_button"
             android:text="@string/back" />
     </LinearLayout>
 
@@ -98,29 +90,21 @@
             android:id="@+id/ResultT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:layout_weight="4"
             android:gravity="center"
-            android:text="@string/Results" />
+            android:text="@string/Results"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewSlot"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:layout_gravity="center"
+            android:padding="20dp">
 
-            android:layout_weight="0.3"></androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
-
-<!--     <Button
-        android:id="@+id/BackB"
-        android:layout_width="78dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:layout_margin="10dp"
-        android:layout_weight="1.25"
-        android:background="@drawable/buttonb"
-        android:text="@string/back" /> -->
 
 </LinearLayout>
