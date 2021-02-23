@@ -18,102 +18,55 @@
 
 
             <TextView
-                android:id="@+id/SlotProfileTRecycle"
+                android:id="@+id/adressTRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Slot"
-                android:textSize="30dp" />
-
-            <TextView
-                android:id="@+id/IsDisableTRecycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Is Disable"
+                android:text="@string/Adress"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/IsDisableTPrRecycle"
+                android:id="@+id/adressTPrRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="1" />
+             />
+
 
             <TextView
-                android:id="@+id/IsIndoorTRecycle"
+                android:id="@+id/priceTRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Is Indoor"
+                android:text="@string/Price"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/IsIndoorTPrRecycle"
+                android:id="@+id/priceTPrRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="2" />
+                android:gravity="center" />
 
             <TextView
-                android:id="@+id/IsFreeTRecycle"
+                android:id="@+id/pavedTRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Is Free"
+                android:text="@string/Paved"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/IsFreeTPrRecycle"
+                android:id="@+id/pavedTPrRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="3" />
-
-            <TextView
-                android:id="@+id/ParkingNumTRecycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Parking Num"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/ParkingNumTPrRecycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/choose"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/choose" />
-
-                <Button
-                    android:id="@+id/ShowReportB"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="show_reports" />
-            </LinearLayout>
+          />
 
 
         </LinearLayout>

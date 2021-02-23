@@ -35,6 +35,15 @@
     <string name="Writeby">Write by</string>
     <string name="Report">Report</string>
     <string name="DateOfCreate">Date of create:"</string>
+    <string name="saveSlot">Save Slot</string>
+    <string name="areaSaveSlot">Area Slot:</string>
+    <string name="disableSaveSlot">Disabled Slot:</string>
+    <string name="priceSaveSlot">Price Slot:</string>
+    <string name="Results">Results</string>
+    <string name="Adress">Adress</string>
+    <string name="Paved">Paved</string>
+    <string name="Price">Price</string>
+
 
 
 </resources>
