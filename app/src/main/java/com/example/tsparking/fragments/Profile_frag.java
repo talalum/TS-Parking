@@ -1,11 +1,9 @@
 package com.example.tsparking.fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +118,7 @@ public class Profile_frag extends Fragment {
             AreaT = (TextView) view.findViewById(R.id.areaSlotSaved);
             AreaT.setText(parking.getArea());
 
-            freeT= (TextView) view.findViewById(R.id.freeSlotSaved);
+            freeT= (TextView) view.findViewById(R.id.priceSlotSaved);
             freeT.setText(String.valueOf(parking.getPrice()));
 
             disabledT= (TextView) view.findViewById(R.id.disableSlotSaved);

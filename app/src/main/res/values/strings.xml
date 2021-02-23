@@ -37,6 +37,15 @@
     <string name="TheReport">the report:</string>
     <string name="DateOfCreate">Date of create:</string>
     <string name="OfNumSlot">of slot number:</string>
+    <string name="DateOfCreate">Date of create:"</string>
+    <string name="saveSlot">Save Slot</string>
+    <string name="areaSaveSlot">Area Slot:</string>
+    <string name="disableSaveSlot">Disabled Slot:</string>
+    <string name="priceSaveSlot">Price Slot:</string>
+    <string name="Results">Results</string>
+    <string name="Adress">Adress</string>
+    <string name="Paved">Paved</string>
+    <string name="Price">Price</string>
 
 
 

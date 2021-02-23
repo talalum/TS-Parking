@@ -46,23 +46,15 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
     @Override
     public void onBindViewHolder(@NonNull SlotViewHolder holder, int position) {
         Slot slot=listSlot.get(position);
-
-        if (slot.isDisable() == true)
-            holder.IsDisableTPr.setText("V");
+        MainActivity mainActivity=new MainActivity();
+        Parking parking=mainActivity.getParkingByNum(slot.getParkingNum());
+        if (parking.isPaved() == true)
+            holder.IspavedTPr.setText("V");
         else
-            holder.IsDisableTPr.setText("X");
+            holder.IspavedTPr.setText("X");
 
-        if (slot.isIndoor() == true)
-            holder.IsIndoorTPr.setText("V");
-        else
-            holder.IsIndoorTPr.setText("X");
-
-        if (slot.isFree() == true)
-            holder.IsFreeTPr.setText("V");
-        else
-            holder.IsFreeTPr.setText("X");
-
-        holder.ParkingNumTPr.setText(String.valueOf(slot.getParkingNum()));
+        holder.adressTPr.setText(String.valueOf(parking.getAddress()));
+        holder.priceTPr.setText(String.valueOf(parking.getPrice()));
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,11 +63,6 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
                 newR1.show(numSlotChoose);
               
 
-              
-//                 MainActivity mainActivity=new MainActivity();
-//                 Slot slot=listSlot.get(position);
-//                 int numParkingChoose=slot.getSlotNum();
-//                 mainActivity.chooseParking(numParkingChoose);   
 
             }
         });
@@ -87,14 +74,13 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
     }
 
     class SlotViewHolder extends RecyclerView.ViewHolder{
-         TextView IsDisableTPr,IsIndoorTPr,IsFreeTPr, ParkingNumTPr;
+         TextView IspavedTPr,priceTPr, adressTPr;
          View v;
         public SlotViewHolder(@NonNull View itemView) {
             super(itemView);
-            IsDisableTPr=itemView.findViewById(R.id.IsDisableTPrRecycle);
-            IsIndoorTPr=itemView.findViewById(R.id.IsIndoorTPrRecycle);
-            IsFreeTPr=itemView.findViewById(R.id.IsFreeTPrRecycle);
-            ParkingNumTPr=itemView.findViewById(R.id.ParkingNumTPrRecycle);
+            IspavedTPr=itemView.findViewById(R.id.pavedTPrRecycle);
+            priceTPr=itemView.findViewById(R.id.priceTPrRecycle);
+            adressTPr=itemView.findViewById(R.id.adressTPrRecycle);
             v=itemView;
         }
     }

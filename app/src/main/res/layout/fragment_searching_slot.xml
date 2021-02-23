@@ -10,11 +10,12 @@
         android:id="@+id/SearchingSlotT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.1"
+        android:layout_weight="1.6"
+        android:textStyle="bold"
         android:gravity="center"
         android:padding="15dp"
         android:text="@string/searchingslot"
-        android:textSize="35dp" />
+        android:textSize="25dp" />
 
 <!-- 
     <Spinner
@@ -47,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/Disable"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/IsFreeCB"
@@ -55,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/free"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/IsIndoorCB"
@@ -63,30 +64,31 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/Indoor"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/SearchingSlotBP"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
+            android:padding="10dp"
+            android:text="@string/search"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/BackB"
+            android:layout_width="78dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttonb"
+            android:text="@string/back" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/SearchingSlotBP"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.2"
-        android:background="@drawable/button_style"
-        android:padding="20dp"
-        android:text="@string/search"
-        android:textSize="25dp" />
-
-    <Button
-        android:id="@+id/BackB"
-        android:layout_width="78dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:layout_margin="10dp"
-        android:layout_weight="1.1"
-        android:background="@drawable/buttonb"
-        android:text="@string/back" />
-
-  <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -96,17 +98,19 @@
             android:id="@+id/ResultT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="Result" />
+            android:text="@string/Results" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewSlot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_gravity="center"
+
+            android:layout_weight="0.3"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
 <!--     <Button
