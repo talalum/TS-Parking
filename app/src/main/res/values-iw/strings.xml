@@ -34,6 +34,9 @@
     <string name="messageDialog">האם אתה עדיין חונה ב</string>
     <string name="Writeby">נכתב על ידי: </string>
     <string name="Report">דיווח</string>
+    <string name="TheReport">תוכן הדו"ח:</string>
+    <string name="DateOfCreate">תאריך יצירה:</string>
+    <string name="OfNumSlot">חנייה מספר:</string>
     <string name="DateOfCreate">תאריך יצירה:</string>
     <string name="saveSlot">חנייה שמורה</string>
     <string name="areaSaveSlot">איזור חנייה:</string>

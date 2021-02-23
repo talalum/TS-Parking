@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     EditText TtheReport;
     TextView TwriteBy;
-    EditText TslotNum;
+    TextView TslotNum;
     DatabaseReference refBR;
     Report report;
 
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     public void SaveReport() {
         TtheReport = (EditText) findViewById(R.id.ReportTP);
         TwriteBy = (TextView) findViewById(R.id.EmailUserTP);
-        TslotNum = (EditText) findViewById(R.id.SlotNumTP);
+        TslotNum = (TextView) findViewById(R.id.SlotNumTP);
         refBR = FirebaseDatabase.getInstance().getReference().child("Report");
 
         String theReport = TtheReport.getText().toString();

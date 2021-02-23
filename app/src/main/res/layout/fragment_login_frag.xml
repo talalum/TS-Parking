@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_login"
     tools:context=".fragments.Login_frag">
-
-    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/EmailText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="@string/emaillogin"
             android:inputType="textEmailAddress"
-            android:text=" "
-            android:textSize="30sp" />
+            android:padding="40dp"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,50 +34,46 @@
         <EditText
             android:id="@+id/PasswordText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/passwordlogin"
             android:inputType="number|numberPassword"
-            android:textSize="30sp"/>
+            android:padding="40dp"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
         <Button
             android:id="@+id/LoginB"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_style"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_button"
+            android:enabled="false"
+            android:padding="30dp"
             android:text="@string/login"
-            android:textSize="35dp"
-            android:enabled="false"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/RegisterB"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_style"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_button"
+            android:padding="30dp"
             android:text="@string/register"
-            android:textSize="35dp"/>
-
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:textSize="20sp" />
     </LinearLayout>
 
-   <!-- <LinearLayout
+    <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
