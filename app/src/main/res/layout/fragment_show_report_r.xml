@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical"
     android:layout_gravity="center"
     tools:context=".fragments.ShowReportR">
@@ -12,23 +11,24 @@
         android:id="@+id/SlotT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.6"
+        android:layout_weight="2.5"
         android:text="Reports"
         android:textSize="30dp"
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewReport"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_gravity="center"
         android:padding="20dp">
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.6"
+        android:layout_weight="2.6"
         android:orientation="horizontal">
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/buttonb"
-            android:text="choose slot" />
+            android:text="@string/choose" />
 
         <Button
             android:id="@+id/BackB"
