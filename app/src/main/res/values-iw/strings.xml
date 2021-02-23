@@ -34,7 +34,18 @@
     <string name="messageDialog">האם אתה עדיין חונה ב</string>
     <string name="Writeby">נכתב על ידי: </string>
     <string name="Report">דיווח</string>
-    <string name="DateOfCreate">תאריך יצירה:"</string>
+    <string name="DateOfCreate">תאריך יצירה:</string>
+    <string name="saveSlot">חנייה שמורה</string>
+    <string name="areaSaveSlot">איזור חנייה:</string>
+    <string name="disableSaveSlot">חניית נכים: </string>
+    <string name="priceSaveSlot">מחיר חנייה: </string>
+    <string name="Results">תוצאות</string>
+    <string name="Adress">כתובת</string>
+    <string name="Paved">כורכר</string>
+    <string name="Price">מחיר</string>
+
+
+
 
 
 

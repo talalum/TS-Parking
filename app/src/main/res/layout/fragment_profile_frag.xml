@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.1"
+        android:layout_weight="1.25"
         android:orientation="horizontal">
 
 
@@ -24,12 +24,12 @@
             <TextView
                 android:id="@+id/HelloT"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/helloUser"
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/helloTP"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_style"
-                android:padding="25dp"
+                android:padding="5dp"
                 android:text="@string/logout" />
         </LinearLayout>
 
@@ -63,7 +63,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="0.7"
         android:orientation="vertical">
 
 
@@ -92,7 +92,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="firstname private// delete" />
+          />
 
         <TextView
             android:id="@+id/LastNameT"
@@ -109,7 +109,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="lastname private// delete" />
+           />
 
         <TextView
             android:id="@+id/EmailT"
@@ -126,54 +126,101 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="email private// delete" />
+             />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/slotSaved"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:orientation="vertical"
         android:visibility="invisible">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/savedSlotT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/saveSlot"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/releaseSlot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/Release" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/areaSlotSavedT"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/areaSaveSlot" />
 
         <TextView
             android:id="@+id/areaSlotSaved"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_weight="1"
             android:text="" />
 
         <TextView
-            android:id="@+id/freeSlotSaved"
+            android:id="@+id/PriceSlotSavedT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/priceSaveSlot" />
+
+        <TextView
+            android:id="@+id/priceSlotSaved"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="" />
+
+        <TextView
+            android:id="@+id/disableSlotSavedT"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/disableSaveSlot" />
 
         <TextView
             android:id="@+id/disableSlotSaved"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_weight="1"
             android:text="" />
 
-        <Button
-            android:id="@+id/releaseSlot"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_style"
-            android:text="@string/Release" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.1"
+        android:layout_weight="1.25"
         android:orientation="horizontal">
 
 
