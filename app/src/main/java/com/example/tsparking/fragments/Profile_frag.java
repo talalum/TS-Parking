@@ -111,7 +111,7 @@ public class Profile_frag extends Fragment {
 
             mainActivity.OpendialogFunc();
             LinearLayout saved=view.findViewById(R.id.slotSaved);
-            saved.setVisibility(0);
+            saved.setVisibility(View.VISIBLE);
             Slot slot = mainActivity.getSlotByNum(slotNum);
             Parking parking = mainActivity.getParkingByNum(slot.getParkingNum());
 
@@ -123,8 +123,9 @@ public class Profile_frag extends Fragment {
 
             disabledT= (TextView) view.findViewById(R.id.disableSlotSaved);
             if(slot.isDisable()==true)
+                disabledT.setText("V");
+            else
                 disabledT.setText("X");
-
         }
 
 

@@ -52,7 +52,7 @@
                 android:id="@+id/LogOutB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_style"
+                android:background="@drawable/log_out"
                 android:padding="5dp"
                 android:text="@string/logout" />
         </LinearLayout>
@@ -73,61 +73,86 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="@string/userprofile"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/FirstNameT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/firstname"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/FirstNameTPr"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-          />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/LastNameT"
+            <TextView
+                android:id="@+id/FirstNameT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/firstname"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/FirstNameTPr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/lastname"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/LastNameTPr"
+            <TextView
+                android:id="@+id/LastNameT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/lastname"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/LastNameTPr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-           />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/EmailT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/email"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/EmailT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/email"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/EmailTPr"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-             />
-
+            <TextView
+                android:id="@+id/EmailTPr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="15sp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -137,6 +162,15 @@
         android:layout_weight="0.9"
         android:orientation="vertical"
         android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="___________________________________________" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,61 +193,86 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/button_style"
+                android:background="@drawable/border_button"
                 android:text="@string/Release" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/areaSlotSavedT"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="@string/areaSaveSlot" />
+            android:layout_weight="0.9"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/areaSlotSaved"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="" />
 
-        <TextView
-            android:id="@+id/PriceSlotSavedT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="@string/priceSaveSlot" />
+            <TextView
+                android:id="@+id/areaSlotSavedT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/areaSaveSlot"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/priceSlotSaved"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="" />
+            <TextView
+                android:id="@+id/areaSlotSaved"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
 
-        <TextView
-            android:id="@+id/disableSlotSavedT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="@string/disableSaveSlot" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/disableSlotSaved"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="" />
+            android:layout_weight="0.9"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/PriceSlotSavedT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/priceSaveSlot"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/priceSlotSaved"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/disableSlotSavedT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/disableSaveSlot"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/disableSlotSaved"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -228,7 +287,9 @@
             android:id="@+id/SearchingSlotB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/button_style"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:background="@drawable/border_button"
             android:text="@string/searchingslot" />
     </LinearLayout>
 </LinearLayout>

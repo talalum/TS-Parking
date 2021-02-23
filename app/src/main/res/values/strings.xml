@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TSparking</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="helloUser">Hello </string>
     <string name="userprofile">User Profile</string>
     <string name="firstname">First Name: </string>
@@ -37,7 +36,6 @@
     <string name="TheReport">the report:</string>
     <string name="DateOfCreate">Date of create:</string>
     <string name="OfNumSlot">of slot number:</string>
-    <string name="DateOfCreate">Date of create:"</string>
     <string name="saveSlot">Save Slot</string>
     <string name="areaSaveSlot">Area Slot:</string>
     <string name="disableSaveSlot">Disabled Slot:</string>
