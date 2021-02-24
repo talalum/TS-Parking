@@ -40,6 +40,7 @@
     <string name="saveSlot">Save Slot</string>
     <string name="areaSaveSlot">Area Slot:</string>
     <string name="disableSaveSlot">Disabled Slot:</string>
+    <string name="addressSaveSlot">Address Slot:</string>
     <string name="priceSaveSlot">Price Slot:</string>
     <string name="Results">Results</string>
     <string name="Adress">Adress</string>

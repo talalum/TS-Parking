@@ -164,8 +164,8 @@ public class SearchingSlot extends Fragment {
                 Query query= FirebaseDatabase.getInstance().getReference("Slot").orderByChild("ParkingNum");
 
                 Boolean finalIsdisable = isdisable;
-                Boolean finalIsIndoorCB = isIndoorCB;
                 Boolean finalIsFreeCB = isFreeCB;
+                Boolean finalIsIndoorCB = isIndoorCB;
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -173,11 +173,11 @@ public class SearchingSlot extends Fragment {
                             double price= mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getPrice();
                             if(finalIsFreeCB==true) {
                                 if (adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
-                                        adSnapshot.getValue(Slot.class).isIndoor() == finalIsIndoorCB && price == 0.0 && mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected) &&
-                                        adSnapshot.getValue(Slot.class).isFree() == true)
+                                        adSnapshot.getValue(Slot.class).isIndoor() == finalIsIndoorCB && price == 0.0 && mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected)
+                                        && adSnapshot.getValue(Slot.class).isFree() == true)
                                     mainActivity.getMySingeltonMSlot().addSlot(adSnapshot.getValue(Slot.class));
                             }
-                                else
+                            else
                             if(adSnapshot.getValue(Slot.class).isDisable() == finalIsdisable &&
                                     adSnapshot.getValue(Slot.class).isIndoor()== finalIsIndoorCB &&
                                     mainActivity.getParkingByNum(adSnapshot.getValue(Slot.class).getParkingNum()).getArea().equals(areaSelected)&&

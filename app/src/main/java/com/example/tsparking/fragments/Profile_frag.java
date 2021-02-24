@@ -31,6 +31,7 @@ public class Profile_frag extends Fragment {
     TextView emailT;
     TextView slotNumT;
     TextView AreaT;
+    TextView AddressT;
     TextView freeT;
     TextView disabledT;
 
@@ -126,6 +127,9 @@ public class Profile_frag extends Fragment {
                 disabledT.setText("V");
             else
                 disabledT.setText("X");
+
+            AddressT = (TextView) view.findViewById(R.id.addressSlotSaved);
+            AddressT.setText(parking.getAddress());
         }
 
 

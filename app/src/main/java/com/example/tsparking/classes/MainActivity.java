@@ -43,7 +43,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity implements Observer {
-
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private static String firstName=null;
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     EditText Tdisable;
     EditText Tindoor;
-    EditText Tfree;
     EditText TparkingNum;
     DatabaseReference refBS;
     Slot slot;
@@ -86,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private static Parking ParkingByNum;
 
     private static MyDialogFragment myDialogFragment=new MyDialogFragment();
-
 
     private static final String TAG = "MyActivity";
 
@@ -144,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         return listparking.getMySingelton();
     }
 
-
     public static listSlot getMySingeltonMSlot() { return ListSlot.getMySingelton();
     }
   
@@ -165,10 +161,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
 
-
-
-    public void UpdateLists()
-    {
+    public void UpdateLists() {
         listparking=listParking.getMySingelton();
         List<Parking> listp=listparking.getList();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Parking");
@@ -207,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         });
 
     }
+
     public void SignUpFunc() {
         EditText emailText = findViewById(R.id.EmailRText);
         String email = emailText.getText().toString();
@@ -327,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Profile_frag r1= Profile_frag.newInstance(firstName,lastName,Email, String.valueOf(slotNum));
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
     public void LoadManagerPage() {
         fragmentTransaction = fragmentManager.beginTransaction();
         ManagerPage r1= new ManagerPage();
@@ -344,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Profile_frag r1=new Profile_frag();
         fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
     }
+
     public void BackToLogin() {
         fragmentTransaction = fragmentManager.beginTransaction();
         Login_frag r1=new Login_frag();
@@ -403,14 +399,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
         Tdisable = (EditText) findViewById(R.id.DisableText);
         Tindoor = (EditText) findViewById(R.id.IndoorText);
-        Tfree = (EditText) findViewById(R.id.FreeText);
         TparkingNum = (EditText) findViewById(R.id.ParkingNumText);
 
         refBS = FirebaseDatabase.getInstance().getReference().child("Slot");
 
         String disable = Tdisable.getText().toString();
         String indoor = Tindoor.getText().toString();
-        String free = Tfree.getText().toString();
         String ParkingNum = TparkingNum.getText().toString();
 
         Boolean a = false;
@@ -421,12 +415,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
         if (indoor.equals("1"))
             b = true;
 
-        Boolean c = false;
-        if (free.equals("1"))
-            c = true;
+
 
         getMaxSlotNum();
-        slot = new Slot(a,b,c,Integer.parseInt(ParkingNum),numSlotMax);
+        slot = new Slot(a,b,Integer.parseInt(ParkingNum),numSlotMax);
 
         refBS.push().setValue(slot);
         Toast.makeText(MainActivity.this, "data insert successfully", Toast.LENGTH_LONG).show();
@@ -457,7 +449,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         LoadPageProf();
     }
 
-
     public void GoToRegisterSlot() {
         fragmentTransaction = fragmentManager.beginTransaction();
         AddSlot r1=new AddSlot();
@@ -483,6 +474,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         });
 
     }
+
     public void getMaxSlotNum() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Slot");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -528,6 +520,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             fragmentTransaction.replace(R.id.fragmentCont, r1).addToBackStack(null).commit();
         }
     }
+
     public void chooseParking(int numSlot) {
 
         slotNum=numSlot;
@@ -653,6 +646,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         });
 
     }
+
     public Slot getSlotByNum(int num) {
         for (int i = 0; i < listSlot.getMySingelton().getList().size(); i++)
             if (listSlot.getMySingelton().getList().get(i).getSlotNum() == num)

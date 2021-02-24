@@ -40,6 +40,7 @@
     <string name="OfNumSlot">חנייה מספר:</string>
     <string name="saveSlot">חנייה שמורה</string>
     <string name="areaSaveSlot">איזור חנייה:</string>
+    <string name="addressSaveSlot">כתובת חנייה:</string>
     <string name="disableSaveSlot">חניית נכים: </string>
     <string name="priceSaveSlot">מחיר חנייה: </string>
     <string name="Results">תוצאות</string>
