@@ -530,7 +530,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
     }
     public void chooseParking(int numSlot) {
 
-
         slotNum=numSlot;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
@@ -547,6 +546,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
                         SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("numSlot", String.valueOf(oldNumSlot));
+
+                        editor.putString("SaveSlot", String.valueOf(slotNum));
                         editor.apply();
 
                         mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(numSlot);
@@ -568,12 +569,27 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot slots : snapshot.getChildren()) {
                     if(slots.getValue(Slot.class).getSlotNum()==numSlot) {
-                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(false);
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(false); // change the current slot
+                        LoadPageProf();
                     }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("Slot");
+        ref3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot slots : snapshot.getChildren()) {
                     if(slots.getValue(Slot.class).getSlotNum()==oldNumSlot) {
-                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);
+                        mDatabaseRef.child("Slot").child(slots.getKey()).child("free").setValue(true);// free the previous slot
                         if(oldNumSlot!=0)
-                           GoToAddReportPage();
+                            GoToAddReportPage();
+
                     }
 
 
@@ -583,10 +599,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
         }
 
     public void ReleaseSlot() {
+        slotNum=0;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 
@@ -602,6 +618,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
                         SharedPreferences sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("numSlot", String.valueOf(oldNumSlot));
+                        editor.putString("SaveSlot", String.valueOf(0));
+                        editor.apply();
                         editor.apply();
                         mDatabaseRef.child("Users").child(UID).child("slotNum").setValue(0);
                     }
