@@ -24,9 +24,9 @@
             android:id="@+id/RegisterSlotB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:layout_weight="1"
-            android:background="@drawable/buttonb"
+            android:background="@drawable/border_button"
             android:text="@string/Addslot"
             android:textSize="20sp"/>
 
@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/buttonb"
+            android:layout_margin="20dp"
+            android:background="@drawable/border_button"
             android:text="@string/Addparking"
             android:textSize="20sp"/>
     </LinearLayout>
@@ -47,7 +48,7 @@
         android:layout_gravity="right"
         android:layout_margin="10dp"
         android:layout_weight="0"
-        android:background="@drawable/buttonb"
+        android:background="@drawable/border_button"
         android:text="@string/back"
         android:textSize="15sp"/>
 
